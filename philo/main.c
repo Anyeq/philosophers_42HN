@@ -6,20 +6,53 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:47:04 by asando            #+#    #+#             */
-/*   Updated: 2025/10/10 14:54:21 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/10 20:56:24 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+long	get_time_ms(void)
+{
+	struct timeval tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
+}
+
+void	log_action(long time_start_ms, int philo_id, char *action)
+{
+	//should mutex here
+	printf("%ld %d %s\n", get_time_ms() - time_start_ms, philo_id, action);
+	//should mutex unlock here
+}
+
+void	is_eating(){}
+void	is_sleeping(){}
+void	is_thingking(){}
+void	is_died(){}
+void	has_taken_fork(){}
+void	*action()
+{
+	while ()
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
+	t_philo	*philo;
+	int		i;
 
+	i = 0;
+	philo = NULL;
 	if (parse_input(argc, argv, &data) == -1)
 		return (-1);
-	printf("%d\n", data.n_philo);
-	printf("%d\n", data.time_to_die);
-	printf("%d\n", data.time_to_eat);
-	printf("%d\n", data.time_to_sleep);
+	philo = malloc(sizeof(t_philo) * data.n_philo);
+	data.time_start_ms = get_time_ms();
+	while (i < data.n_philo)
+		pthread_create(philo[i++].thread, NULL, routine, NULL);
+	i = 0;
+	while (i < data.n_philo)
+		pthread_join(philo[i++]);
 	return (0);
 }
