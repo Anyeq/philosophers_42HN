@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:57:11 by asando            #+#    #+#             */
-/*   Updated: 2025/10/11 13:46:06 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/11 14:32:28 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_data
 	long			time_start_ms;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	*fork;
+	t_philo			*philo;
 } t_data;
 
 typedef struct s_philo
