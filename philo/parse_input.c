@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 16:10:56 by asando            #+#    #+#             */
-/*   Updated: 2025/10/10 20:08:25 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/11 13:43:35 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ int	parse_input(int argc, char **argv, t_data *data)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->n_to_eat = ft_atoi(argv[5]);
-	someone_died = false;
+	end_simulation = false;
 	return (0);
 }

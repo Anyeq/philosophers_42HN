@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:57:11 by asando            #+#    #+#             */
-/*   Updated: 2025/10/10 20:07:35 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/11 13:46:06 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,26 @@
 
 typedef struct s_data
 {
-	int		n_philo;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		n_to_eat;
-	bool	someone_died;
-	long	time_start_ms;
+	int				n_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				n_eat_max;
+	bool			end_simulation;
+	long			time_start_ms;
+	pthread_mutex_t	mutex_print;
+	pthread_mutex_t	*fork;
 } t_data;
 
 typedef struct s_philo
 {
-	int			id;
-	int			n_eat;
-	pthread_t	thread;
+	int				id;
+	int				n_eat;
+	long			time_last_eat_ms;
+	pthread_t		thread;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*left_fork;
+	t_data			*data;
 } t_philo;
 
 int	parse_input(int argc, char **argv, t_data *data);
