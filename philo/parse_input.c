@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 16:10:56 by asando            #+#    #+#             */
-/*   Updated: 2025/10/11 13:57:11 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/11 20:09:41 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	ft_atoi(char *str)
 		sign = -1;
 		str++;
 	}
-	while (*str && ft_isdigit(*str))
+	while (*str && ft_isdigit((unsigned char)*str))
 	{
 		res = res * 10 + ((*str - '0') * sign);
 		str++;

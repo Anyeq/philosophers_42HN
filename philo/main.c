@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:47:04 by asando            #+#    #+#             */
-/*   Updated: 2025/10/11 14:53:18 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/11 20:48:26 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,6 @@ void	log_action(t_philo *philo, char *action)
 	pthread_mutex_unlock(philo->data->mutex_print);
 }
 
-void	*philo_action(void *arg)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
-	while ()
-}
 
 int	init_mutex(t_data *data)
 {
@@ -61,10 +54,12 @@ ini	init_philo(t_data *data)
 	{
 		data->philo[i].id = i + 1;
 		data->philo[i].n_eat = 0;
-		data->philo[i].time_last_eat_ms = data->time_start_ms;
+		data->philo[i].right_fork = &data->fork[i];
+		data->philo[i].left_fork = &data->fork[(i + 1) % data->n_philo];
 		data->philo[i].data = data;
 		i++;
 	}
+	return (0);
 }
 
 int	init(t_data *data)
@@ -78,13 +73,18 @@ int	init(t_data *data)
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->n_philo);
 	if (data->fork == NULL)
 		return (-1);
-	if (init_mutex(data))
+	if (init_mutex(data) == -1)
+		return (-1);
+	if (init_philo(data) == -1)
 		return (-1);
 	data->time_start_ms = get_time_ms();
-	while (i < data.n_philo)
+	while (i < data->n_philo)
 	{
-		if (pthread_create(data->philo[i++].thread, NULL, action, NULL))
+		data->philo[i].time_last_eat_ms = get_time_ms();
+		if (pthread_create(data->philo[i].thread, NULL, action,
+					 (void *)(&data->philo[i]))
 			return (-1);
+		i++;
 	}
 	return (0);
 }
@@ -100,6 +100,6 @@ int	main(int argc, char **argv)
 	if (init(&data) == -1)
 		return (-1);
 	while (i < data.n_philo)
-		pthread_join(philo[i++]);
+		pthread_join(philo[i++], NULL);
 	return (0);
 }
