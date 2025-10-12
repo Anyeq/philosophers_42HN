@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 16:10:56 by asando            #+#    #+#             */
-/*   Updated: 2025/10/11 20:09:41 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/12 16:28:50 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	parse_input(int argc, char **argv, t_data *data)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->n_eat_max = ft_atoi(argv[5]);
-	end_simulation = false;
+	data->end_simulation = false;
+	data->fork = NULL;
 	return (0);
 }
