@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 13:50:19 by asando            #+#    #+#             */
-/*   Updated: 2025/10/12 19:54:03 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/12 20:28:23 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static int	init_mutex(t_data *data)
 	i = 0;
 	while (i < data->n_philo)
 	{
-		if (pthread_mutex_init(data->fork[i++], NULL))
+		if (pthread_mutex_init(&(data->fork[i++]), NULL))
 			return (-1);
 	}
-	if (pthread_mutex_init(data->mutex_print, NULL))
+	if (pthread_mutex_init(&(data->mutex_print), NULL))
 		return (-1);
 	return (0);
 }

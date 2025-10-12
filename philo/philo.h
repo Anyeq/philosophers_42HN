@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:57:11 by asando            #+#    #+#             */
-/*   Updated: 2025/10/12 19:55:21 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/12 20:26:46 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_philo
 	t_data			*data;
 } t_philo;
 
+long	get_time_ms(void);
 int		parse_input(int argc, char **argv, t_data *data);
 int		init_thread(t_data *data, t_philo **philo);
 void	*philo_action(void *arg);

@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2025/10/12 19:51:29 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/12 20:25:39 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static void	log_action(t_philo *philo, char *action)
 {
-	pthread_mutex_lock(philo->data->mutex_print);
+	pthread_mutex_lock(&(philo->data->mutex_print));
 	if (philo->data->end_simulation == false)
 		printf("%ld %d %s\n", get_time_ms() - philo->data->time_start_ms,
 		 philo->id, action);
-	pthread_mutex_unlock(philo->data->mutex_print);
+	pthread_mutex_unlock(&(philo->data->mutex_print));
 }
 
 static bool	end_condition(t_philo *philo)
@@ -38,16 +38,16 @@ static void	prepare_to_eat(t_philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->right_fork);
-		log_action(philo, "has taken a fork")
+		log_action(philo, "has taken a fork");
 		pthread_mutex_lock(philo->left_fork);
 		log_action(philo, "has taken a fork");
 	}
 	else
 	{
 		pthread_mutex_lock(philo->left_fork);
-		log_action(philo, "has taken a fork")
+		log_action(philo, "has taken a fork");
 		pthread_mutex_lock(philo->right_fork);
-		log_action(philo, "has taken a fork")
+		log_action(philo, "has taken a fork");
 	}
 	return ;
 }

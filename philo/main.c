@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:47:04 by asando            #+#    #+#             */
-/*   Updated: 2025/10/12 19:54:15 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/12 20:29:01 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv)
 	while (i < data.n_philo)
 		pthread_join(philo[i++].thread, NULL);
 	free(philo);
-	free(data->fork);
+	free(data.fork);
 	// dont forget to clean the fork and philo at anytime when error happen
 	return (0);
 }
