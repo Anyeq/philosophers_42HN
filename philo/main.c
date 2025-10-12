@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:47:04 by asando            #+#    #+#             */
-/*   Updated: 2025/10/12 20:29:01 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/12 21:28:43 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,12 @@ int	main(int argc, char **argv)
 	free(philo);
 	free(data.fork);
 	// dont forget to clean the fork and philo at anytime when error happen
+	// check edge case in input for n_philo < 1 or 1
+	// maybe print error more correctly on the case
+	// check the action
+	// check if the case is only 1 philo
+	// need to destroy all mutex before close
+	// simulation end when n max reach
+	// adjust usleep by creating usleep fnction
 	return (0);
 }
