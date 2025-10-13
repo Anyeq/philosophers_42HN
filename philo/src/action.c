@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2025/10/12 21:26:19 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/13 13:53:04 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ void	*philo_action(void *arg)
 		log_action(philo, "is thinking");
 		prepare_to_eat(philo);
 		log_action(philo, "is eating");
-		philo->time_last_eat_ms = get_time_ms();
-		usleep(philo->data->time_to_eat * 1000);
+		ft_usleep(philo->data->time_to_eat);
 		philo->n_eat++;
 		finish_eat(philo);
+		philo->time_last_eat_ms = get_time_ms();
 		log_action(philo, "is sleeping");
-		usleep(philo->data->time_to_sleep * 1000);
+		ft_usleep(philo->data->time_to_sleep);
 	}
 	return (NULL);
 }

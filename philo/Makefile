@@ -6,16 +6,16 @@
 #    By: asando <asando@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/12 19:56:18 by asando            #+#    #+#              #
-#    Updated: 2025/10/12 20:14:37 by asando           ###   ########.fr        #
+#    Updated: 2025/10/13 12:15:38 by asando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC ?= cc
 DEBUG ?= 0
 CFLAGS := -Wall -Wextra -Wall -pthread
-HEADER := .
+HEADER := include
 
-SRC_DIR := .
+SRC_DIR := src
 SRCS := action.c init_prog.c main.c parse_input.c
 
 OBJ_DIR := obj
@@ -30,7 +30,7 @@ $(NAME): $(OBJS)
 	@$(CC) -o $@ $(OBJS)
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(HEADER) -c $< -o $@
 
 $(OBJ_DIR):
 	@echo "Creating obj folder..."
