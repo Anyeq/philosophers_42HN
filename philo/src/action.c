@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2025/10/13 14:38:41 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/13 15:11:06 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static bool	end_condition(t_philo *philo)
 
 static void	prepare_to_eat(t_philo *philo)
 {
-	if (philo->data->end_simulation == false)
+	//check this line
+	if (end_condition(philo) == false)
 	{
 		if (philo->id % 2 == 0)
 		{
@@ -71,7 +72,7 @@ void	*philo_action(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		ft_usleep(10);
+		ft_usleep(1);
 	while (end_condition(philo) == false)
 	{
 		log_action(philo, "is thinking");
