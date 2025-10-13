@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 16:10:56 by asando            #+#    #+#             */
-/*   Updated: 2025/10/12 16:28:50 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/13 10:36:09 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,7 @@ static void	ft_usage(void)
 			"[number_of_time_each_philosophers_need_to_eat]");
 }
 
-static int	ft_isdigit(unsigned char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
-static int	ft_is_valid(char *str)
+static int	is_valid(char *str)
 {
 	while (*str)
 	{
@@ -37,27 +30,7 @@ static int	ft_is_valid(char *str)
 	return (1);
 }
 
-static int	ft_atoi(char *str)
-{
-	int	res;
-	int	sign;
-
-	res = 0;
-	sign = 1;
-	if (*str == '-')
-	{
-		sign = -1;
-		str++;
-	}
-	while (*str && ft_isdigit((unsigned char)*str))
-	{
-		res = res * 10 + ((*str - '0') * sign);
-		str++;
-	}
-	return (res);
-}
-
-int	parse_input(int argc, char **argv, t_data *data)
+static int	check_input_error(int argc, char **argv)
 {
 	int	i;
 
@@ -69,12 +42,24 @@ int	parse_input(int argc, char **argv, t_data *data)
 	}
 	while (i < argc)
 	{
-		if (!ft_is_valid(argv[i++]))
+		if (i == 1 && argv[i][0] == '0')
+		{
+			ft_usage();
+			return (-1);
+		}
+		if (!is_valid(argv[i++]))
 		{
 			ft_usage();
 			return (-1);
 		}
 	}
+	return (0);
+}
+
+int	parse_input(int argc, char **argv, t_data *data)
+{
+	if (check_input_error(argc, argv) == -1)
+		return (-1);
 	data->n_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);

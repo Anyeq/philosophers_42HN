@@ -6,18 +6,21 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:47:04 by asando            #+#    #+#             */
-/*   Updated: 2025/10/12 21:28:43 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/13 10:41:19 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	get_time_ms(void)
+static void	destroy_mutex(t_data *data)
 {
-	struct timeval tv;
+	int	i;
 
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
+	i = 0;
+	while (i < data->n_philo)
+	{
+		pthread_mutex_destroy()
+	}
 }
 
 int	main(int argc, char **argv)
@@ -34,6 +37,7 @@ int	main(int argc, char **argv)
 		return (-1);
 	while (i < data.n_philo)
 		pthread_join(philo[i++].thread, NULL);
+	destroy_mutex(&data);
 	free(philo);
 	free(data.fork);
 	// dont forget to clean the fork and philo at anytime when error happen
