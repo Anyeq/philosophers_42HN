@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2025/10/13 13:50:57 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/13 14:10:50 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_usleep(long target_time_ms)
 {
 	long start;
 
-	start = get_time_ms(void);
+	start = get_time_ms();
 	while (1)
 	{
 		if (get_time_ms() - start >= target_time_ms)

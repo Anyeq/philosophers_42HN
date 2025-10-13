@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:57:11 by asando            #+#    #+#             */
-/*   Updated: 2025/10/12 20:26:46 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/13 14:08:08 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,10 @@ long	get_time_ms(void);
 int		parse_input(int argc, char **argv, t_data *data);
 int		init_thread(t_data *data, t_philo **philo);
 void	*philo_action(void *arg);
+
+//utils
+int		ft_isdigit(unsigned char c);
+int		ft_atoi(char *str);
+long	get_time_ms(void);
+void	ft_usleep(long target_time_ms);
 #endif

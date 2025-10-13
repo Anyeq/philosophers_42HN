@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 13:50:19 by asando            #+#    #+#             */
-/*   Updated: 2025/10/13 12:35:29 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/13 14:10:19 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ static int	init_philo(t_data *data, t_philo *philo)
 
 static int	create_thread(t_data *data, t_philo *philo)
 {
+	int	i;
+
+	i = 0;
 	data->time_start_ms = get_time_ms();
 	while (i < data->n_philo)
 	{

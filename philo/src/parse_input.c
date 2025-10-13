@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 16:10:56 by asando            #+#    #+#             */
-/*   Updated: 2025/10/13 10:36:09 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/13 14:06:17 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	check_input_error(int argc, char **argv)
 	}
 	while (i < argc)
 	{
-		if (i == 1 && argv[i][0] == '0')
+		if (i == 1 && ft_atoi(argv[1]) < 1)
 		{
 			ft_usage();
 			return (-1);

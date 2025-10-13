@@ -6,7 +6,7 @@
 #    By: asando <asando@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/12 19:56:18 by asando            #+#    #+#              #
-#    Updated: 2025/10/13 12:15:38 by asando           ###   ########.fr        #
+#    Updated: 2025/10/13 14:09:09 by asando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS := -Wall -Wextra -Wall -pthread
 HEADER := include
 
 SRC_DIR := src
-SRCS := action.c init_prog.c main.c parse_input.c
+SRCS := action.c init_prog.c main.c parse_input.c utils.c
 
 OBJ_DIR := obj
 OBJS := $(SRCS:%.c=$(OBJ_DIR)/%.o)
@@ -29,7 +29,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@$(CC) -o $@ $(OBJS)
 
-$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -I$(HEADER) -c $< -o $@
 
 $(OBJ_DIR):

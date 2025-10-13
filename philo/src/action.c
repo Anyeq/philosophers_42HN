@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2025/10/13 13:53:04 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/13 14:38:41 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static bool	end_condition(t_philo *philo)
 {
 	if (philo->data->end_simulation == true)
 		return (true);
-	if (get_time_ms() - philo->time_last_eat_ms > philo->data->time_to_eat)
+	if (get_time_ms() - philo->time_last_eat_ms > philo->data->time_to_die)
 	{
 		log_action(philo, "died");
 		philo->data->end_simulation = true;
@@ -71,16 +71,16 @@ void	*philo_action(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		ft_usleep(10);
 	while (end_condition(philo) == false)
 	{
 		log_action(philo, "is thinking");
 		prepare_to_eat(philo);
+		philo->time_last_eat_ms = get_time_ms();
 		log_action(philo, "is eating");
 		ft_usleep(philo->data->time_to_eat);
-		philo->n_eat++;
 		finish_eat(philo);
-		philo->time_last_eat_ms = get_time_ms();
+		philo->n_eat++;
 		log_action(philo, "is sleeping");
 		ft_usleep(philo->data->time_to_sleep);
 	}
