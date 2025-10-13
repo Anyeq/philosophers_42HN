@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:47:04 by asando            #+#    #+#             */
-/*   Updated: 2025/10/13 10:41:19 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/13 12:09:33 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ static void	destroy_mutex(t_data *data)
 
 	i = 0;
 	while (i < data->n_philo)
-	{
-		pthread_mutex_destroy()
-	}
+		pthread_mutex_destroy(&(data->fork[i++]));
+	pthread_mutex_destroy(&(data->mutex_print));
 }
 
 int	main(int argc, char **argv)
