@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:57:11 by asando            #+#    #+#             */
-/*   Updated: 2025/10/13 14:08:08 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/14 20:29:12 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ void	*philo_action(void *arg);
 int		ft_isdigit(unsigned char c);
 int		ft_atoi(char *str);
 long	get_time_ms(void);
-void	ft_usleep(long target_time_ms);
+void	ft_usleep(long target_time_ms, t_data *data);
 #endif

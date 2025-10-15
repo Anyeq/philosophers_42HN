@@ -6,7 +6,7 @@
 /*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:47:04 by asando            #+#    #+#             */
-/*   Updated: 2025/10/13 12:29:53 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/15 10:19:31 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ int	main(int argc, char **argv)
 	// need to destroy all mutex before close
 	// simulation end when n max reach
 	// adjust usleep by creating usleep fnction
+	// consider if the philo less than 1
+	// consider if the n_eat_max == 0
 	return (0);
 }

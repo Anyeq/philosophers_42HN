@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 13:50:19 by asando            #+#    #+#             */
-/*   Updated: 2025/10/13 14:10:19 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/14 17:26:42 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,6 @@ static int	create_thread(t_data *data, t_philo *philo)
 
 int	init_thread(t_data *data, t_philo **philo)
 {
-	int	i;
-
-	i = 0;
 	*philo = malloc(sizeof(t_philo) * data->n_philo);
 	if (*philo == NULL)
 		return (-1);
