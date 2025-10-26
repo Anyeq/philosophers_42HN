@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:42:31 by asando            #+#    #+#             */
-/*   Updated: 2025/10/26 14:42:34 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/26 23:08:52 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,13 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	philo = NULL;
-	if (parse_input(argc, argv, &data) == -1)
+	if (ft_parse_input(argc, argv, &data) == -1)
 		return (-1);
 	if (init_thread(&data, &philo) == -1)
 		return (-1);
 	while (i < data.n_philo)
 		pthread_join(philo[i++].thread, NULL);
 	destroy_mutex(&data);
-	free(philo);
-	free(data.fork);
+	ft_free_alloc((void *)philo, (void *)data.fork);
 	return (0);
 }

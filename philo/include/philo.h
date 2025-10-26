@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/07 15:57:11 by asando            #+#    #+#             */
-/*   Updated: 2025/10/14 20:29:12 by asando           ###   ########.fr       */
+/*   Created: 2025/10/26 14:44:13 by asando            #+#    #+#             */
+/*   Updated: 2025/10/26 23:31:07 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+typedef enum e_input_flag
+{
+	INVALID_NPARAMS = 1 << 0;
+	INVALID_NPHILO = 1 << 1;
+	INVALID_INPUT = 1 << 2;
+} t_input_flag;
+
+typedef enum e_fail_flag
+{
+	MALLOC_FAIL = 1 << 0;
+	MUTEX_FAIL = 1 << 1;
+	THREAD_FAIL = 1 << 2;
+} t_fail_flag;
+
 typedef struct s_data
 {
 	int				n_philo;
@@ -29,6 +43,8 @@ typedef struct s_data
 	int				n_eat_max;
 	bool			end_simulation;
 	long			time_start_ms;
+	t_philo			*philo;
+	pthread_t		super_thread;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	*fork;
 } t_data;
@@ -43,6 +59,12 @@ typedef struct s_philo
 	pthread_mutex_t	*left_fork;
 	t_data			*data;
 } t_philo;
+
+typedef struct s_super_variable
+{
+	t_data	*data;
+	t_philo	*philo;
+}	t_super_variable;
 
 long	get_time_ms(void);
 int		parse_input(int argc, char **argv, t_data *data);

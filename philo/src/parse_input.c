@@ -6,20 +6,13 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:43:03 by asando            #+#    #+#             */
-/*   Updated: 2025/10/26 14:43:05 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/26 15:03:36 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	ft_usage(void)
-{
-	printf("Usage philo <number_of_philosophers> " 
-			" <time_to_die> <time_to_eat> <time_to_sleep> "
-			"[number_of_time_each_philosophers_need_to_eat]");
-}
-
-static int	is_valid(char *str)
+static int	ft_is_valid(char *str)
 {
 	while (*str)
 	{
@@ -30,35 +23,35 @@ static int	is_valid(char *str)
 	return (1);
 }
 
-static int	check_input_error(int argc, char **argv)
+static int	ft_check_input_error(int argc, char **argv)
 {
 	int	i;
 
 	i = 1;
 	if (argc < 5 || argc > 6)
 	{
-		ft_usage();
+		ft_usage(INVALID_NPARAMS);
 		return (-1);
 	}
 	while (i < argc)
 	{
 		if (i == 1 && ft_atoi(argv[1]) < 1)
 		{
-			ft_usage();
+			ft_usage(INVALID_NPHILO);
 			return (-1);
 		}
 		if (!is_valid(argv[i++]))
 		{
-			ft_usage();
+			ft_usage(INVALID_INPUT);
 			return (-1);
 		}
 	}
 	return (0);
 }
 
-int	parse_input(int argc, char **argv, t_data *data)
+int	ft_parse_input(int argc, char **argv, t_data *data)
 {
-	if (check_input_error(argc, argv) == -1)
+	if (ft_check_input_error(argc, argv) == -1)
 		return (-1);
 	data->n_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
@@ -66,6 +59,8 @@ int	parse_input(int argc, char **argv, t_data *data)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->n_eat_max = ft_atoi(argv[5]);
+	else if (argc < 6)
+		data->n_eat_max = -1;
 	data->end_simulation = false;
 	data->fork = NULL;
 	return (0);
