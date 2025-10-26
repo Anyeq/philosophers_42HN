@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asando <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/07 15:47:04 by asando            #+#    #+#             */
-/*   Updated: 2025/10/15 10:19:31 by asando           ###   ########.fr       */
+/*   Created: 2025/10/26 14:42:31 by asando            #+#    #+#             */
+/*   Updated: 2025/10/26 14:42:34 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ static void	destroy_mutex(t_data *data)
 	pthread_mutex_destroy(&(data->mutex_print));
 }
 
+// TODO: Create modular function, so in main there is no int i variable
+// TODO: Create Stop_thread function
+// TODO: Before closing need to destroy all mutex
+// TEST: for 1 philo
+// TEST: when simulation reach n_max
+// TEST: n_eat_max == 0, and n_philo < 1
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -39,15 +45,5 @@ int	main(int argc, char **argv)
 	destroy_mutex(&data);
 	free(philo);
 	free(data.fork);
-	// dont forget to clean the fork and philo at anytime when error happen
-	// check edge case in input for n_philo < 1 or 1
-	// maybe print error more correctly on the case
-	// check the action
-	// check if the case is only 1 philo
-	// need to destroy all mutex before close
-	// simulation end when n max reach
-	// adjust usleep by creating usleep fnction
-	// consider if the philo less than 1
-	// consider if the n_eat_max == 0
 	return (0);
 }

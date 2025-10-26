@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 13:50:19 by asando            #+#    #+#             */
-/*   Updated: 2025/10/14 17:26:42 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/15 10:22:28 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	init_philo(t_data *data, t_philo *philo)
 	return (0);
 }
 
-static int	create_thread(t_data *data, t_philo *philo)
+static int	start_thread(t_data *data, t_philo *philo)
 {
 	int	i;
 
@@ -61,6 +61,8 @@ static int	create_thread(t_data *data, t_philo *philo)
 	return (0);
 }
 
+// TODO: finish this fnction
+
 int	init_thread(t_data *data, t_philo **philo)
 {
 	*philo = malloc(sizeof(t_philo) * data->n_philo);
@@ -76,7 +78,7 @@ int	init_thread(t_data *data, t_philo **philo)
 		return (-1);
 	}
 	init_philo(data, *philo);
-	if (create_thread(data, *philo) == -1)
+	if (start_thread(data, *philo) == -1)
 	{
 		free(*philo);
 		free(data->fork);
