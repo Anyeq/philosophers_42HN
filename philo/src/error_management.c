@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:39:27 by asando            #+#    #+#             */
-/*   Updated: 2025/10/26 21:47:06 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/27 11:27:03 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,15 @@ void	ft_system_failed(t_fail_flag flag, char *str)
 		printf("Error: pthread_mutex_init on %s failed", str);
 	else
 		printf("Error: pthread_create on %s failed", str);
+	return ;
 }
 
-void	ft_free_alloc(void *philo, void *fork)
+void	ft_free_alloc(t_philo **philo, t_data *data)
 {
-	free(philo);
-	free(fork);
+	free(*philo);
+	free(data->fork);
+	*philo = NULL;
+	data->fork = NULL;
+	data->philo = NULL;
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:43:03 by asando            #+#    #+#             */
-/*   Updated: 2025/10/26 15:03:36 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/27 13:03:40 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ static int	ft_check_input_error(int argc, char **argv)
 	return (0);
 }
 
+// NOTE: after ft_parse_input following variable is still not defined
+// - [ ] super_thread
+// - [ ] time_start_ms
+// - [ ] mutex_print
 int	ft_parse_input(int argc, char **argv, t_data *data)
 {
 	if (ft_check_input_error(argc, argv) == -1)
@@ -63,5 +67,6 @@ int	ft_parse_input(int argc, char **argv, t_data *data)
 		data->n_eat_max = -1;
 	data->end_simulation = false;
 	data->fork = NULL;
+	data->philo = NULL;
 	return (0);
 }

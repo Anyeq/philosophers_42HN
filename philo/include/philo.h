@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:44:13 by asando            #+#    #+#             */
-/*   Updated: 2025/10/26 23:31:07 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/27 16:38:51 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_data
 	t_philo			*philo;
 	pthread_t		super_thread;
 	pthread_mutex_t	mutex_print;
+	pthread_mutex_t	mutex_sim;
+	pthread_mutex_t	mutex_time_check;
 	pthread_mutex_t	*fork;
 } t_data;
 
@@ -59,12 +61,6 @@ typedef struct s_philo
 	pthread_mutex_t	*left_fork;
 	t_data			*data;
 } t_philo;
-
-typedef struct s_super_variable
-{
-	t_data	*data;
-	t_philo	*philo;
-}	t_super_variable;
 
 long	get_time_ms(void);
 int		parse_input(int argc, char **argv, t_data *data);

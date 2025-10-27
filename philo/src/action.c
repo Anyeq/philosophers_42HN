@@ -6,43 +6,11 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2025/10/26 23:31:06 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/27 13:21:04 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static bool	end_condition(t_philo *philo)
-{
-	pthread_mutex_lock(&(philo->data->mutex_print));
-	if (philo->data->end_simulation == true)
-	{
-		pthread_mutex_unlock(&(philo->data->mutex_print));
-		return (true);
-	}
-	if (get_time_ms() - philo->time_last_eat_ms > philo->data->time_to_die)
-	{
-		printf("%ld %d %s\n", get_time_ms() - philo->data->time_start_ms,
-		 philo->id, "died");
-		philo->data->end_simulation = true;
-	}
-	pthread_mutex_unlock(&(philo->data->mutex_print));
-	return (false);
-}
-
-static void	log_action(t_philo *philo, char *action)
-{
-	if (end_condition(philo) == true)
-		return ;
-	pthread_mutex_lock(&(philo->data->mutex_print));
-	if (philo->data->end_simulation == false)
-	{
-		printf("%ld %d %s\n", get_time_ms() - philo->data->time_start_ms,
-		 philo->id, action);
-	}
-	pthread_mutex_unlock(&(philo->data->mutex_print));
-	return ;
-}
 
 static void	prepare_to_eat(t_philo *philo)
 {

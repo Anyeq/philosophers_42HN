@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2025/10/14 20:44:14 by asando           ###   ########.fr       */
+/*   Updated: 2025/10/27 16:31:02 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_atoi(char *str)
 	return (res);
 }
 
-long	get_time_ms(void)
+long	ft_get_time_ms(void)
 {
 	struct timeval tv;
 
@@ -47,14 +47,33 @@ long	get_time_ms(void)
 	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
 }
 
+void	log_action(t_philo *philo, char *action)
+{
+	if (philo->data->end_simulation == false)
+	{
+		pthread_mutex_lock(&(philo->data->mutex_print));
+		printf("%ld %d %s\n", ft_get_time_ms() - philo->data->time_start_ms,
+		 philo->id, action);
+		pthread_mutex_unlock(&(philo->data->mutex_print));
+	}
+	return ;
+}
+
 void	ft_usleep(long target_time_ms, t_data *data)
 {
-	long start;
+	long	start;
+	bool	should_stop;
 
-	start = get_time_ms();
+	should_stop = false;
+	start = ft_get_time_ms();
 	while (1)
 	{
-		if (get_time_ms() - start >= target_time_ms || data->end_simulation == true)
+		pthread_mutex_lock(&data->mutex_sim);
+		should_stop = data->end_simulation;
+		pthread_mutex_unlock(&data->mutex_sim);
+		if (should_stop)
+			break ;
+		if (get_time_ms() - start >= target_time_ms)
 			break ;
 		usleep(5);
 	}
