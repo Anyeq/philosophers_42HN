@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:44:13 by asando            #+#    #+#             */
-/*   Updated: 2025/10/27 16:38:51 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/21 19:51:48 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,6 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-typedef enum e_input_flag
-{
-	INVALID_NPARAMS = 1 << 0;
-	INVALID_NPHILO = 1 << 1;
-	INVALID_INPUT = 1 << 2;
-} t_input_flag;
-
-typedef enum e_fail_flag
-{
-	MALLOC_FAIL = 1 << 0;
-	MUTEX_FAIL = 1 << 1;
-	THREAD_FAIL = 1 << 2;
-} t_fail_flag;
-
 typedef struct s_data
 {
 	int				n_philo;
@@ -44,7 +30,7 @@ typedef struct s_data
 	bool			end_simulation;
 	long			time_start_ms;
 	t_philo			*philo;
-	pthread_t		super_thread;
+	pthread_t		monitor_thread;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	mutex_sim;
 	pthread_mutex_t	mutex_time_check;
@@ -62,14 +48,38 @@ typedef struct s_philo
 	t_data			*data;
 } t_philo;
 
-long	get_time_ms(void);
-int		parse_input(int argc, char **argv, t_data *data);
-int		init_thread(t_data *data, t_philo **philo);
+// Flag for ft_usage function
+typedef enum e_input_flag
+{
+	INVALID_NPARAMS = 1 << 0;
+	INVALID_NPHILO = 1 << 1;
+	INVALID_INPUT = 1 << 2;
+} t_input_flag;
+
+// Flag for ft_system_failed
+typedef enum e_fail_flag
+{
+	MALLOC_FAIL = 1 << 0;
+	MUTEX_FAIL = 1 << 1;
+	THREAD_FAIL = 1 << 2;
+} t_fail_flag;
+
+// Parsing user input function
+int		ft_parse_input(int argc, char **argv, t_data *data);
+
+// Error management Function
+void	ft_system_failed(t_fail_flag flag, char *str);
+void	ft_free_alloc(t_philo **philo, t_data *data);
+void	ft_usage(t_input_flag flag);
+
+// Thread initialization Function
+int		ft_init_thread(t_data *data, t_philo **philo);
 void	*philo_action(void *arg);
 
-//utils
+// Utils Function
 int		ft_isdigit(unsigned char c);
 int		ft_atoi(char *str);
-long	get_time_ms(void);
 void	ft_usleep(long target_time_ms, t_data *data);
+void	ft_log_action(t_philo *philo, char *action);
+long	ft_get_time_ms(void);
 #endif

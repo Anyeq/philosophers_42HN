@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:43:03 by asando            #+#    #+#             */
-/*   Updated: 2025/10/27 13:03:40 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/21 19:24:54 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	ft_check_input_error(int argc, char **argv)
 			ft_usage(INVALID_NPHILO);
 			return (-1);
 		}
-		if (!is_valid(argv[i++]))
+		if (!ft_is_valid(argv[i++]))
 		{
 			ft_usage(INVALID_INPUT);
 			return (-1);

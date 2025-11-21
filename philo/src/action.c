@@ -6,13 +6,13 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2025/10/27 13:21:04 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/21 20:07:27 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	prepare_to_eat(t_philo *philo)
+static void	ft_prepare_to_eat(t_philo *philo)
 {
 	if (end_condition(philo) == false)
 	{
@@ -34,14 +34,14 @@ static void	prepare_to_eat(t_philo *philo)
 	return ;
 }
 
-static void	finish_eat(t_philo *philo)
+static void	ft_finish_eat(t_philo *philo)
 {
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	return ;
 }
 
-void	*philo_action(void *arg)
+void	*ft_philo_action(void *arg)
 {
 	t_philo	*philo;
 

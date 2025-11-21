@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2025/10/27 21:40:00 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/21 20:08:08 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static bool	ft_hunger_condition(t_data *data)
 	}
 }
 
-void	*super_thread_action(void *arg)
+void	*ft_monitor_action(void *arg)
 {
 	t_data	*data;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2025/10/27 16:31:02 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/21 12:33:10 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ long	ft_get_time_ms(void)
 	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
 }
 
-void	log_action(t_philo *philo, char *action)
+void	ft_log_action(t_philo *philo, char *action)
 {
 	if (philo->data->end_simulation == false)
 	{
@@ -73,7 +73,7 @@ void	ft_usleep(long target_time_ms, t_data *data)
 		pthread_mutex_unlock(&data->mutex_sim);
 		if (should_stop)
 			break ;
-		if (get_time_ms() - start >= target_time_ms)
+		if (ft_get_time_ms() - start >= target_time_ms)
 			break ;
 		usleep(5);
 	}
