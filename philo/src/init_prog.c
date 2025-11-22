@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 13:50:19 by asando            #+#    #+#             */
-/*   Updated: 2025/11/21 20:06:21 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/22 22:01:22 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static int	ft_init_mutex(t_data *data)
 		}
 		i++;
 	}
-	if (pthread_mutex_init(&(data->mutex_print), NULL))
+	if (pthread_mutex_init(&(data->mutex_print_log), NULL))
 	{
-		ft_system_failed(MUTEX_FAIL, "data->mutex_print");
+		ft_system_failed(MUTEX_FAIL, "data->mutex_print_log");
 		while (--i >= 0)
 			pthread_mutex_destroy(&(data->fork[i]));
 		return (-1);
@@ -74,7 +74,5 @@ int	ft_init_simulation(t_data *data, t_philo **philo)
 	if (ft_init_mutex(data) == -1)
 		return (-1);
 	ft_init_philo(data, *philo);
-	if (ft_start_thread(data, *philo) == -1)
-		return (-1);
 	return (0);
 }

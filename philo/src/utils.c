@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2025/11/21 12:33:10 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/22 21:43:23 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,22 @@ long	ft_get_time_ms(void)
 	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
 }
 
+// NOTE: Maybe time should be taken before mutex_print is locked
 void	ft_log_action(t_philo *philo, char *action)
 {
-	if (philo->data->end_simulation == false)
+	bool	simulation_status;
+	long	current_time;
+
+	current_time = ft_get_time_ms();
+	pthread_mutex_lock(&(philo->data->mutex_monitor_simulation_status));
+	simulation_status = philo->data->end_simulation;
+	pthread_mutex_unlock(&(philo->data->mutex_monitor_simulation_status));
+	if (simulation_status == false)
 	{
-		pthread_mutex_lock(&(philo->data->mutex_print));
-		printf("%ld %d %s\n", ft_get_time_ms() - philo->data->time_start_ms,
+		pthread_mutex_lock(&(philo->data->mutex_print_log));
+		printf("%ld %d %s\n", current_time - philo->data->time_start_ms,
 		 philo->id, action);
-		pthread_mutex_unlock(&(philo->data->mutex_print));
+		pthread_mutex_unlock(&(philo->data->mutex_print_log));
 	}
 	return ;
 }
@@ -62,20 +70,19 @@ void	ft_log_action(t_philo *philo, char *action)
 void	ft_usleep(long target_time_ms, t_data *data)
 {
 	long	start;
-	bool	should_stop;
+	bool	simulation_status;
 
-	should_stop = false;
 	start = ft_get_time_ms();
 	while (1)
 	{
-		pthread_mutex_lock(&data->mutex_sim);
-		should_stop = data->end_simulation;
-		pthread_mutex_unlock(&data->mutex_sim);
-		if (should_stop)
+		pthread_mutex_lock(&(philo->data->mutex_monitor_simulation_status));
+		simulation_status = data->end_simulation;
+		pthread_mutex_unlock(&(philo->data->mutex_monitor_simulation_status));
+		if (simulation_status)
 			break ;
 		if (ft_get_time_ms() - start >= target_time_ms)
 			break ;
-		usleep(5);
+		usleep(100);
 	}
 	return ;
 }

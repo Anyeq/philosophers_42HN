@@ -6,29 +6,36 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2025/11/21 20:07:27 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/22 22:01:11 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// NOTE: There is a case where philo is only 1 person and he doesnt have
+// enough fork
 static void	ft_prepare_to_eat(t_philo *philo)
 {
-	if (end_condition(philo) == false)
+	bool	simulation_status;
+
+	pthread_mutex_lock(&(philo->data->mutex_monitor_simulation_status));
+	simulation_status = philo->data->end_simulation;
+	pthread_mutex_unlock(&(philo->data->mutex_monitor_simulation_status));
+	if (simulation_status == false)
 	{
 		if (philo->id % 2 == 0)
 		{
 			pthread_mutex_lock(philo->right_fork);
-			log_action(philo, "has taken a fork");
+			ft_log_action(philo, "has taken a fork");
 			pthread_mutex_lock(philo->left_fork);
-			log_action(philo, "has taken a fork");
+			ft_log_action(philo, "has taken a fork");
 		}
 		else
 		{
 			pthread_mutex_lock(philo->left_fork);
-			log_action(philo, "has taken a fork");
+			ft_log_action(philo, "has taken a fork");
 			pthread_mutex_lock(philo->right_fork);
-			log_action(philo, "has taken a fork");
+			ft_log_action(philo, "has taken a fork");
 		}
 	}
 	return ;
@@ -41,23 +48,32 @@ static void	ft_finish_eat(t_philo *philo)
 	return ;
 }
 
+// NOTE: when assigning new value to time_last_eat_ms we should use mutex
 void	*ft_philo_action(void *arg)
 {
 	t_philo	*philo;
+	bool	simulation_status;
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(1, philo->data);
-	while (end_condition(philo) == false)
+	while (1)
 	{
-		log_action(philo, "is thinking");
-		prepare_to_eat(philo);
-		philo->time_last_eat_ms = get_time_ms();
-		log_action(philo, "is eating");
+		pthread_mutex_lock(&(philo->data->mutex_monitor_simulation_status));
+		simulation_status = philo->data->end_simulation;
+		pthread_mutex_unlock(&(philo->data->mutex_monitor_simulation_status));
+		if (simulation_status)
+			return (NULL);
+		ft_log_action(philo, "is thinking");
+		ft_prepare_to_eat(philo);
+		pthread_mutex_lock(&(philo->mutex_monitor_last_eat_time));
+		philo->time_last_eat_ms = ft_get_time_ms();
+		pthread_mutex_unlock(&(philo->mutex_monitor_last_eat_time));
+		ft_log_action(philo, "is eating");
 		ft_usleep(philo->data->time_to_eat, philo->data);
-		finish_eat(philo);
+		ft_finish_eat(philo);
 		philo->n_eat++;
-		log_action(philo, "is sleeping");
+		ft_log_action(philo, "is sleeping");
 		ft_usleep(philo->data->time_to_sleep, philo->data);
 	}
 	return (NULL);

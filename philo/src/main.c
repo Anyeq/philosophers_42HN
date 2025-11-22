@@ -6,20 +6,28 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:42:31 by asando            #+#    #+#             */
-/*   Updated: 2025/11/21 20:25:04 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/22 21:54:10 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	ft_destroy_mutex(t_data *data)
+// NOTE: new mutex_sim should also be destroyed
+// NOTE: possibly mutex_time_check should also be destroyed
+void	ft_destroy_mutex(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->n_philo)
 		pthread_mutex_destroy(&(data->fork[i++]));
-	pthread_mutex_destroy(&(data->mutex_print));
+	pthread_mutex_destroy(&(data->mutex_print_log));
+	if (data->n_philo > 1)
+	{
+		pthread_mutex_destroy(&(data->mutex_monitor_simulation_status));
+		pthread_mutex_destroy(&(data->mutex_monitor_last_eat_time));
+		pthread_mutex_destroy(&(data->mutex_monitor_n_eat));
+	}
 	return ;
 }
 
@@ -33,32 +41,6 @@ static void	ft_join_thread(t_data *data)
 	if (data->n_philo > 1)
 		pthread_join(data->monitor_thread, NULL);
 	return ;
-}
-
-// NOTE: Forgett what mutex_sim for
-static int	ft_start_monitoring_thread(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	if (data->n_philo > 1)
-	{
-		if (pthread_create(&(data->monitor_thread), NULL, monitor_action,
-					 (void *)data)
-		{
-			ft_system_failed(THREAD_FAIL, "data->super_thread");
-			ft_destroy_mutex(data);
-			return (-1);
-		}
-	}
-	if (pthread_mutex_init(&(data->mutex_sim), NULL))
-	{
-		ft_system_failed(MUTEX_FAIL, "data->mutex_sim");
-		ft_destroy_mutex(data);
-		pthread_join(data->monitor_thread, NULL);
-		return (-1);
-	}
-	return (0);
 }
 
 // NOTE: check ft_start_monitoring_thread
@@ -90,6 +72,13 @@ static int	ft_start_simulation(t_data *data, t_philo *philo)
 	return (0);
 }
 
+static void	ft_stop_simulation(t_data *data)
+{
+	ft_join_thread(data);
+	ft_destroy_mutex(data);
+	return ;
+}
+
 // NOTE: Usage philo 4 100 100 100 || philo 4 100 100 100 5
 int	main(int argc, char **argv)
 {
@@ -109,8 +98,7 @@ int	main(int argc, char **argv)
 		ft_free_alloc(&philo, &data);
 		return (-1);
 	}
-	ft_join_thread(&data);
-	ft_destroy_mutex(&data);
+	ft_stop_simulation(&data);
 	ft_free_alloc(&philo, &data);
 	return (0);
 }

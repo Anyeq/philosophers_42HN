@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:44:13 by asando            #+#    #+#             */
-/*   Updated: 2025/11/21 19:51:48 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/22 22:01:24 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ typedef struct s_data
 	long			time_start_ms;
 	t_philo			*philo;
 	pthread_t		monitor_thread;
-	pthread_mutex_t	mutex_print;
-	pthread_mutex_t	mutex_sim;
-	pthread_mutex_t	mutex_time_check;
+	pthread_mutex_t	mutex_print_log;
+	pthread_mutex_t	mutex_monitor_simulation_status;
+	pthread_mutex_t	mutex_monitor_last_eat_time;
+	pthread_mutex_t	mutex_monitor_n_eat;
 	pthread_mutex_t	*fork;
 } t_data;
 
