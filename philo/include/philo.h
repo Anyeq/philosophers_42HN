@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:44:13 by asando            #+#    #+#             */
-/*   Updated: 2025/11/22 22:01:24 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/23 14:04:59 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,12 @@ void	ft_usage(t_input_flag flag);
 
 // Thread initialization Function
 int		ft_init_thread(t_data *data, t_philo **philo);
-void	*philo_action(void *arg);
+void	*ft_philo_action(void *arg);
+
+// Thread control Function
+void	ft_destroy_mutex(t_data *data);
+int		ft_start_monitoring_thread(t_data *data);
+void	ft_join_thread(t_data *data);
 
 // Utils Function
 int		ft_isdigit(unsigned char c);

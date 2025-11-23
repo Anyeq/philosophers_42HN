@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2025/11/22 21:43:23 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/23 13:18:20 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ long	ft_get_time_ms(void)
 	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
 }
 
-// NOTE: Maybe time should be taken before mutex_print is locked
 void	ft_log_action(t_philo *philo, char *action)
 {
 	bool	simulation_status;
@@ -67,6 +66,7 @@ void	ft_log_action(t_philo *philo, char *action)
 	return ;
 }
 
+// NOTE: rename to milisecond
 void	ft_usleep(long target_time_ms, t_data *data)
 {
 	long	start;

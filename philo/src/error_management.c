@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:39:27 by asando            #+#    #+#             */
-/*   Updated: 2025/11/21 12:31:55 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/22 22:09:00 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_usage(t_input_flag flag)
 	else if (flag & INVALID_NPHILO)
 		printf("INVALID_NPHILO!\nnumber_of_philosophers couldn't less than 1");
 	else
-		printf("INVALID_TIME!\ntime parameter couldn't less than 0");
+		printf("INVALID_TIME!\nparameter has to be more than 0");
 	return ;
 }
 

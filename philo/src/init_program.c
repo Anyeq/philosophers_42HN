@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_prog.c                                        :+:      :+:    :+:   */
+/*   init_program.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 13:50:19 by asando            #+#    #+#             */
-/*   Updated: 2025/11/22 22:01:22 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/23 12:51:41 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// NOTE: Could be made more clear by adding int i on ft_system_failed as parameter
 static int	ft_init_mutex(t_data *data)
 {
 	int	i;
@@ -55,7 +56,6 @@ static int	ft_init_philo(t_data *data, t_philo *philo)
 	return (0);
 }
 
-// TODO: on the ft_get_time_ms() should make it more presice
 int	ft_init_simulation(t_data *data, t_philo **philo)
 {
 	*philo = malloc(sizeof(t_philo) * data->n_philo);
