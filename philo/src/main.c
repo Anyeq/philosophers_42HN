@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:42:31 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 15:02:54 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/23 21:38:38 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ static void	ft_stop_simulation(t_data *data)
 	return ;
 }
 
-// NOTE: Usage philo 4 100 100 100 || philo 4 100 100 100 5
+// NOTE: Usage ./philo 4 410 200 200 || ./philo 4 410 200 200 5
+// BUG: Fail case 1 800 200 200 doesnt show any thread running should die, deadlock!
+// BUG: Failed case 5 800 200 200 7 when it times to died, deadlock!
+// BUG: Failed case 4 310 200 100 when it times to died, deadlock!
+// TODO: Check if the time in the log is accurate as expected
 int	main(int argc, char **argv)
 {
 	t_data	data;

@@ -6,15 +6,12 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 15:14:47 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/23 21:36:29 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// NOTE: NOT YET FINISH
-// NOTE: ft_log_action need to be check to keep the time consistent
-// NOTE: log died case need to be reconsider
 static bool	ft_stop_simulation_condition(t_data *data, long time_last_eat_ms,
 										t_philo *philo)
 {
