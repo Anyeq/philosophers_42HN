@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:42:31 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 14:03:52 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/23 15:02:54 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_destroy_mutex(t_data *data)
 
 void	ft_join_thread(t_data *data)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (i < data->n_philo)
@@ -43,7 +43,7 @@ static int	ft_start_simulation(t_data *data, t_philo *philo)
 	{
 		philo[i].time_last_eat_ms = ft_get_time_ms();
 		if (pthread_create(&(philo[i].thread), NULL, ft_philo_action,
-					 (void *)(philo[i]))
+				(void *)(&philo[i])))
 		{
 			ft_system_failed(THREAD_FAIL, "philo->thread");
 			while (--i >= 0)

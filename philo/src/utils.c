@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 13:18:20 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/23 15:04:36 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_atoi(char *str)
 
 long	ft_get_time_ms(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
@@ -60,7 +60,7 @@ void	ft_log_action(t_philo *philo, char *action)
 	{
 		pthread_mutex_lock(&(philo->data->mutex_print_log));
 		printf("%ld %d %s\n", current_time - philo->data->time_start_ms,
-		 philo->id, action);
+			philo->id, action);
 		pthread_mutex_unlock(&(philo->data->mutex_print_log));
 	}
 	return ;
@@ -75,9 +75,9 @@ void	ft_usleep(long target_time_ms, t_data *data)
 	start = ft_get_time_ms();
 	while (1)
 	{
-		pthread_mutex_lock(&(philo->data->mutex_monitor_simulation_status));
+		pthread_mutex_lock(&(data->mutex_monitor_simulation_status));
 		simulation_status = data->end_simulation;
-		pthread_mutex_unlock(&(philo->data->mutex_monitor_simulation_status));
+		pthread_mutex_unlock(&(data->mutex_monitor_simulation_status));
 		if (simulation_status)
 			break ;
 		if (ft_get_time_ms() - start >= target_time_ms)

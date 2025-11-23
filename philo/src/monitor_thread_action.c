@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 13:18:07 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/23 15:14:47 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // NOTE: ft_log_action need to be check to keep the time consistent
 // NOTE: log died case need to be reconsider
 static bool	ft_stop_simulation_condition(t_data *data, long time_last_eat_ms,
-										 t_philo *philo)
+										t_philo *philo)
 {
 	if (ft_get_time_ms() - time_last_eat_ms > data->time_to_die)
 	{
@@ -26,7 +26,7 @@ static bool	ft_stop_simulation_condition(t_data *data, long time_last_eat_ms,
 		ft_log_action(philo, "died");
 		return (true);
 	}
-	if (data->philo[i].n_eat == data->n_eat_max)
+	if (philo->n_eat == data->n_eat_max)
 	{
 		pthread_mutex_lock(&data->mutex_monitor_simulation_status);
 		data->end_simulation = true;
@@ -37,7 +37,7 @@ static bool	ft_stop_simulation_condition(t_data *data, long time_last_eat_ms,
 	return (false);
 }
 
-bool	ft_monitor_action(void *param)
+static void	*ft_monitor_action(void *param)
 {
 	int		i;
 	long	time_last_eat_ms;
@@ -54,12 +54,14 @@ bool	ft_monitor_action(void *param)
 			pthread_mutex_lock(&data->mutex_monitor_last_eat_time);
 			time_last_eat_ms = data->philo[i].time_last_eat_ms;
 			pthread_mutex_unlock(&data->mutex_monitor_last_eat_time);
-			if (ft_stop_simulation_condition(data, time_last_eat_ms, &data->philo[i]))
+			if (ft_stop_simulation_condition(data, time_last_eat_ms,
+					&data->philo[i]))
 				break ;
 			i++;
 		}
 		ft_usleep(100, data);
 	}
+	return (NULL);
 }
 
 static int	ft_init_mutex_monitor(t_data *data)
@@ -87,13 +89,10 @@ static int	ft_init_mutex_monitor(t_data *data)
 
 int	ft_start_monitoring_thread(t_data *data)
 {
-	int	i;
-
-	i = 0;
 	if (data->n_philo > 1)
 	{
 		if (pthread_create(&(data->monitor_thread), NULL, ft_monitor_action,
-					 (void *)data)
+				(void *)data))
 		{
 			ft_system_failed(THREAD_FAIL, "data->monitor_thread");
 			ft_destroy_mutex(data);

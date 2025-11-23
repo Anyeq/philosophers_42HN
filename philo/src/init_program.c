@@ -6,13 +6,12 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 13:50:19 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 12:51:41 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/23 15:00:39 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// NOTE: Could be made more clear by adding int i on ft_system_failed as parameter
 static int	ft_init_mutex(t_data *data)
 {
 	int	i;
@@ -44,7 +43,7 @@ static int	ft_init_philo(t_data *data, t_philo *philo)
 	int	i;
 
 	i = 0;
-	while(i < data->n_philo)
+	while (i < data->n_philo)
 	{
 		philo[i].id = i + 1;
 		philo[i].n_eat = 0;

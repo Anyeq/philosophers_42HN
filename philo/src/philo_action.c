@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2025/11/22 22:53:44 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/23 15:00:04 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static void	ft_action(t_philo *philo)
 {
 	ft_log_action(philo, "is thinking");
 	ft_prepare_to_eat(philo);
-	pthread_mutex_lock(&(philo->mutex_monitor_last_eat_time));
+	pthread_mutex_lock(&(philo->data->mutex_monitor_last_eat_time));
 	philo->time_last_eat_ms = ft_get_time_ms();
-	pthread_mutex_unlock(&(philo->mutex_monitor_last_eat_time));
+	pthread_mutex_unlock(&(philo->data->mutex_monitor_last_eat_time));
 	ft_log_action(philo, "is eating");
 	ft_usleep(philo->data->time_to_eat, philo->data);
 	ft_finish_eat(philo);

@@ -6,7 +6,7 @@
 #    By: asando <asando@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/12 19:56:18 by asando            #+#    #+#              #
-#    Updated: 2025/11/21 12:51:39 by asando           ###   ########.fr        #
+#    Updated: 2025/11/23 14:50:39 by asando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ CFLAGS := -Wall -Wextra -Wall -pthread
 HEADER := include
 
 SRC_DIR := src
-SRCS := action.c init_prog.c main.c parse_input.c utils.c error_management.c \
-		super_thread_action.c
+SRCS := philo_action.c init_program.c main.c parse_input.c utils.c \
+		error_management.c monitor_thread_action.c
 
 OBJ_DIR := obj
 OBJS := $(SRCS:%.c=$(OBJ_DIR)/%.o)
