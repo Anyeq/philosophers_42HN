@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 15:04:36 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/25 22:55:36 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_usleep(long target_time_ms, t_data *data)
 			break ;
 		if (ft_get_time_ms() - start >= target_time_ms)
 			break ;
-		usleep(100);
+		usleep(50);
 	}
 	return ;
 }

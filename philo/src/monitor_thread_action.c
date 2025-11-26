@@ -6,34 +6,40 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 21:36:29 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/25 22:55:53 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// NOTE: after every philo eat n_eat_max the simulation stop, without loging any special massage
+// TODO: Make again condition to check all philo n_eat
 static bool	ft_stop_simulation_condition(t_data *data, long time_last_eat_ms,
 										t_philo *philo)
 {
-	if (ft_get_time_ms() - time_last_eat_ms > data->time_to_die)
+	long	current_time;
+	int		n_eat;
+
+	current_time = ft_get_time_ms();
+	pthread_mutex_lock(&(philo->data->mutex_monitor_n_eat));
+	n_eat = philo->n_eat;
+	pthread_mutex_unlock(&(philo->data->mutex_monitor_n_eat));
+	if (current_time - time_last_eat_ms > data->time_to_die ||
+		n_eat == data->n_eat_max)
 	{
 		pthread_mutex_lock(&data->mutex_monitor_simulation_status);
 		data->end_simulation = true;
 		pthread_mutex_unlock(&data->mutex_monitor_simulation_status);
-		ft_log_action(philo, "died");
-		return (true);
-	}
-	if (philo->n_eat == data->n_eat_max)
-	{
-		pthread_mutex_lock(&data->mutex_monitor_simulation_status);
-		data->end_simulation = true;
-		pthread_mutex_unlock(&data->mutex_monitor_simulation_status);
-		ft_log_action(philo, "died");
+		if (n_eat == data->n_eat_max)
+			printf("Test");
+		printf("%ld %d %s\n", current_time - philo->data->time_start_ms,
+			philo->id, "died");
 		return (true);
 	}
 	return (false);
 }
 
+// BUG: try to stop the thread when condition is met
 static void	*ft_monitor_action(void *param)
 {
 	int		i;
@@ -43,7 +49,7 @@ static void	*ft_monitor_action(void *param)
 	i = 0;
 	time_last_eat_ms = 0;
 	data = (t_data *)param;
-	while (1)
+	while (data->end_simulation == false)
 	{
 		i = 0;
 		while (i < data->n_philo)
@@ -56,7 +62,7 @@ static void	*ft_monitor_action(void *param)
 				break ;
 			i++;
 		}
-		ft_usleep(100, data);
+		ft_usleep(1, data);
 	}
 	return (NULL);
 }

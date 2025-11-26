@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 15:00:04 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/25 23:14:58 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ static void	ft_prepare_to_eat(t_philo *philo)
 		if (philo->id % 2 == 0)
 		{
 			pthread_mutex_lock(philo->right_fork);
-			ft_log_action(philo, "has taken a fork");
 			pthread_mutex_lock(philo->left_fork);
+			ft_log_action(philo, "has taken a fork");
 			ft_log_action(philo, "has taken a fork");
 		}
 		else
 		{
 			pthread_mutex_lock(philo->left_fork);
-			ft_log_action(philo, "has taken a fork");
 			pthread_mutex_lock(philo->right_fork);
+			ft_log_action(philo, "has taken a fork");
 			ft_log_action(philo, "has taken a fork");
 		}
 	}
@@ -41,8 +41,16 @@ static void	ft_prepare_to_eat(t_philo *philo)
 
 static void	ft_finish_eat(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
 	return ;
 }
 
@@ -71,7 +79,7 @@ void	*ft_philo_action(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		ft_usleep(1, philo->data);
+		usleep(10);
 	while (1)
 	{
 		pthread_mutex_lock(&(philo->data->mutex_monitor_simulation_status));
