@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:42:31 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 21:38:38 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/28 14:41:20 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static int	ft_start_simulation(t_data *data, t_philo *philo)
 	int	i;
 
 	i = 0;
-	data->time_start_ms = ft_get_time_ms();
+	data->time_start_ms = ft_get_time_ms() + (10 * data->n_philo);
 	while (i < data->n_philo)
 	{
-		philo[i].time_last_eat_ms = ft_get_time_ms();
+		philo[i].time_last_eat_ms = data->time_start_ms;
 		if (pthread_create(&(philo[i].thread), NULL, ft_philo_action,
 				(void *)(&philo[i])))
 		{
@@ -77,10 +77,18 @@ static void	ft_stop_simulation(t_data *data)
 }
 
 // NOTE: Usage ./philo 4 410 200 200 || ./philo 4 410 200 200 5
-// BUG: Fail case 1 800 200 200 doesnt show any thread running should die, deadlock!
-// BUG: Failed case 5 800 200 200 7 when it times to died, deadlock!
-// BUG: Failed case 4 310 200 100 when it times to died, deadlock!
-// TODO: Check if the time in the log is accurate as expected
+
+/*  BUG: Fail case 1 800 200 200 doesnt show any thread running should die
+ *  it wait mutex for fork
+ *  TODO: Create action for one philo only
+ *  NOTE: for one Philo case, ft_start_monitor_thread should not run
+*/
+
+/* BUG: Failed case 5 800 200 200 7 when it times to finish it doesnt
+ * show enough eating log
+ * TODO: Check on ft_all_eat_enough
+ * TODO: Check for logging on ft_action
+*/
 int	main(int argc, char **argv)
 {
 	t_data	data;

@@ -6,32 +6,23 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2025/11/25 22:55:53 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/28 14:22:45 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// NOTE: after every philo eat n_eat_max the simulation stop, without loging any special massage
-// TODO: Make again condition to check all philo n_eat
 static bool	ft_stop_simulation_condition(t_data *data, long time_last_eat_ms,
 										t_philo *philo)
 {
 	long	current_time;
-	int		n_eat;
 
 	current_time = ft_get_time_ms();
-	pthread_mutex_lock(&(philo->data->mutex_monitor_n_eat));
-	n_eat = philo->n_eat;
-	pthread_mutex_unlock(&(philo->data->mutex_monitor_n_eat));
-	if (current_time - time_last_eat_ms > data->time_to_die ||
-		n_eat == data->n_eat_max)
+	if (current_time - time_last_eat_ms >= data->time_to_die)
 	{
 		pthread_mutex_lock(&data->mutex_monitor_simulation_status);
 		data->end_simulation = true;
 		pthread_mutex_unlock(&data->mutex_monitor_simulation_status);
-		if (n_eat == data->n_eat_max)
-			printf("Test");
 		printf("%ld %d %s\n", current_time - philo->data->time_start_ms,
 			philo->id, "died");
 		return (true);
@@ -39,7 +30,31 @@ static bool	ft_stop_simulation_condition(t_data *data, long time_last_eat_ms,
 	return (false);
 }
 
-// BUG: try to stop the thread when condition is met
+static bool	ft_all_eat_enough(t_data *data)
+{
+	int	i;
+	int	n_philo_eat_enough;
+
+	i = 0;
+	n_philo_eat_enough = 0;
+	pthread_mutex_lock(&data->mutex_monitor_n_eat);
+	while (i < data->n_philo)
+	{
+		if (data->philo[i].n_eat == data->n_eat_max)
+			n_philo_eat_enough++;
+		i++;
+	}
+	pthread_mutex_unlock(&data->mutex_monitor_n_eat);
+	if (n_philo_eat_enough == data->n_philo)
+	{
+		pthread_mutex_lock(&data->mutex_monitor_simulation_status);
+		data->end_simulation = true;
+		pthread_mutex_unlock(&data->mutex_monitor_simulation_status);
+		return (true);
+	}
+	return (false);
+}
+
 static void	*ft_monitor_action(void *param)
 {
 	int		i;
@@ -49,9 +64,13 @@ static void	*ft_monitor_action(void *param)
 	i = 0;
 	time_last_eat_ms = 0;
 	data = (t_data *)param;
+	while (ft_get_time_ms() < data->time_start_ms)
+		continue ;
 	while (data->end_simulation == false)
 	{
 		i = 0;
+		if (ft_all_eat_enough(data) == true)
+			return (NULL);
 		while (i < data->n_philo)
 		{
 			pthread_mutex_lock(&data->mutex_monitor_last_eat_time);
@@ -62,7 +81,7 @@ static void	*ft_monitor_action(void *param)
 				break ;
 			i++;
 		}
-		ft_usleep(1, data);
+		ft_usleep(10, data);
 	}
 	return (NULL);
 }

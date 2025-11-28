@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2025/11/25 22:55:36 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/28 14:24:07 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	ft_log_action(t_philo *philo, char *action)
 	return ;
 }
 
-// NOTE: rename to milisecond
 void	ft_usleep(long target_time_ms, t_data *data)
 {
 	long	start;
