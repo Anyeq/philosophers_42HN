@@ -1,0 +1,12 @@
+# ignore obj folder
+/philo/obj/
+
+# ignore philo
+/philo/philo
+
+# ignore others
+/philo/compile_commands.json
+
+# ignore .cache
+/philo/.cache/
+

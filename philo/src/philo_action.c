@@ -6,17 +6,12 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2025/11/28 14:41:19 by asando           ###   ########.fr       */
+/*   Updated: 2025/11/30 11:46:40 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// TODO: Check condition if user input n_eat_max == 0
-/* BUG: Condition when it already eat enough need to be fix
- * because if it skip this process and goes to another line on the philo_action
- * will messed it up
-*/
 static void	ft_prepare_to_eat(t_philo *philo)
 {
 	bool	simulation_status;
@@ -24,8 +19,6 @@ static void	ft_prepare_to_eat(t_philo *philo)
 	pthread_mutex_lock(&(philo->data->mutex_monitor_simulation_status));
 	simulation_status = philo->data->end_simulation;
 	pthread_mutex_unlock(&(philo->data->mutex_monitor_simulation_status));
-	if (philo->data->n_eat_max > 0 && philo->n_eat >= philo->data->n_eat_max)
-		return ;
 	if (simulation_status == false)
 	{
 		if (philo->id % 2 == 0)
@@ -59,6 +52,8 @@ static void	ft_action_thinking(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->mutex_monitor_last_eat_time);
 	if (time_to_think < 0)
 		time_to_think = 0;
+	else if (time_to_think > 0 && philo->n_eat == 0)
+		time_to_think = 0;
 	else if (time_to_think > 600)
 		time_to_think = 200;
 	ft_usleep(time_to_think, philo->data);
@@ -80,9 +75,11 @@ static void	ft_finish_eat(t_philo *philo)
 	return ;
 }
 
+// BUG: when it finished due to enough eating amount, it should stop
+// casually instead forcing to stop
 static void	ft_action(t_philo *philo)
 {
-	//ft_log_action(philo, "is thinking");
+	ft_action_thinking(philo);
 	ft_prepare_to_eat(philo);
 	pthread_mutex_lock(&(philo->data->mutex_monitor_last_eat_time));
 	philo->time_last_eat_ms = ft_get_time_ms();
@@ -95,12 +92,9 @@ static void	ft_action(t_philo *philo)
 	pthread_mutex_unlock(&(philo->data->mutex_monitor_n_eat));
 	ft_log_action(philo, "is sleeping");
 	ft_usleep(philo->data->time_to_sleep, philo->data);
-	ft_action_thinking(philo);
 	return ;
 }
 
-// BUG: there is a gap on first action it is because on ft_action we put
-// ft_action_thinking on the bottom
 void	*ft_philo_action(void *arg)
 {
 	t_philo	*philo;
