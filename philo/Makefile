@@ -6,13 +6,13 @@
 #    By: asando <asando@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/12 19:56:18 by asando            #+#    #+#              #
-#    Updated: 2025/11/23 14:50:39 by asando           ###   ########.fr        #
+#    Updated: 2025/12/15 15:20:19 by asando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC ?= cc
 DEBUG ?= 0
-CFLAGS := -Wall -Wextra -Wall -pthread
+CFLAGS := -g -O0 -Wall -Wextra -Wall -pthread
 HEADER := include
 
 SRC_DIR := src

@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2025/11/30 11:21:35 by asando           ###   ########.fr       */
+/*   Updated: 2025/12/13 19:19:11 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static bool	ft_stop_simulation_condition(t_data *data, long time_last_eat_ms,
 		pthread_mutex_unlock(&data->mutex_monitor_simulation_status);
 		printf("%ld %d %s\n", current_time - philo->data->time_start_ms,
 			philo->id, "died");
+		if (data->n_philo == 1)
+			pthread_mutex_unlock(philo->right_fork);
 		return (true);
 	}
 	return (false);
@@ -109,23 +111,42 @@ static int	ft_init_mutex_monitor(t_data *data)
 	return (0);
 }
 
+// TODO: erasing condition
+//int	ft_start_monitoring_thread(t_data *data)
+//{
+//	if (data->n_philo > 1)
+//	{
+//		if (pthread_create(&(data->monitor_thread), NULL, ft_monitor_action,
+//				(void *)data))
+//		{
+//			ft_system_failed(THREAD_FAIL, "data->monitor_thread");
+//			ft_destroy_mutex(data);
+//			return (-1);
+//		}
+//		if (ft_init_mutex_monitor(data))
+//		{
+//			pthread_join(data->monitor_thread, NULL);
+//			ft_destroy_mutex(data);
+//			return (-1);
+//		}
+//	}
+//	return (0);
+//}
+
 int	ft_start_monitoring_thread(t_data *data)
 {
-	if (data->n_philo > 1)
-	{
-		if (pthread_create(&(data->monitor_thread), NULL, ft_monitor_action,
-				(void *)data))
-		{
-			ft_system_failed(THREAD_FAIL, "data->monitor_thread");
-			ft_destroy_mutex(data);
-			return (-1);
-		}
-		if (ft_init_mutex_monitor(data))
-		{
-			pthread_join(data->monitor_thread, NULL);
-			ft_destroy_mutex(data);
-			return (-1);
-		}
-	}
+   if (pthread_create(&(data->monitor_thread), NULL, ft_monitor_action,
+   		(void *)data))
+   {
+   	ft_system_failed(THREAD_FAIL, "data->monitor_thread");
+   	ft_destroy_mutex(data);
+   	return (-1);
+   }
+   if (ft_init_mutex_monitor(data))
+   {
+   	pthread_join(data->monitor_thread, NULL);
+   	ft_destroy_mutex(data);
+   	return (-1);
+   }
 	return (0);
 }
