@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2025/12/13 19:20:09 by asando           ###   ########.fr       */
+/*   Updated: 2025/12/17 15:20:23 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,6 @@ static void	ft_prepare_to_eat(t_philo *philo)
 	return ;
 }
 
-static void	ft_one_philo_action(t_philo *philo)
-{
-
-
-	pthread_mutex_lock(philo->right_fork);
-	if (philo->data->end_simulation == false)
-	{
-		pthread_mutex_lock(&(philo->data->mutex_print_log));
-		printf("%ld %d %s\n", ft_get_time_ms() - philo->data->time_start_ms,
-			philo->id, "has taken a fork");
-		pthread_mutex_unlock(&(philo->data->mutex_print_log));
-	}
-	return ;
-}
-
 // NOTE: this function act as priority function
 static void	ft_action_thinking(t_philo *philo)
 {
@@ -63,8 +48,8 @@ static void	ft_action_thinking(t_philo *philo)
 	ft_log_action(philo, "is thinking");
 	pthread_mutex_lock(&philo->data->mutex_monitor_last_eat_time);
 	time_to_think = (philo->data->time_to_die
-		- (ft_get_time_ms() - philo->time_last_eat_ms)
-		- philo->data->time_to_eat) / 2;
+			- (ft_get_time_ms() - philo->time_last_eat_ms)
+			- philo->data->time_to_eat) / 2;
 	pthread_mutex_unlock(&philo->data->mutex_monitor_last_eat_time);
 	if (time_to_think < 0)
 		time_to_think = 0;
@@ -117,7 +102,7 @@ void	*ft_philo_action(void *arg)
 	bool	simulation_status;
 
 	philo = (t_philo *)arg;
-	while(ft_get_time_ms() < philo->data->time_start_ms)
+	while (ft_get_time_ms() < philo->data->time_start_ms)
 		continue ;
 	if (philo->id % 2 == 0)
 		ft_usleep(1, philo->data);

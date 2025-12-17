@@ -6,7 +6,7 @@
 #    By: asando <asando@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/12 19:56:18 by asando            #+#    #+#              #
-#    Updated: 2025/12/15 15:20:19 by asando           ###   ########.fr        #
+#    Updated: 2025/12/17 15:17:37 by asando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ HEADER := include
 
 SRC_DIR := src
 SRCS := philo_action.c init_program.c main.c parse_input.c utils.c \
-		error_management.c monitor_thread_action.c
+		error_management.c monitor_thread_action.c one_philo_action.c
 
 OBJ_DIR := obj
 OBJS := $(SRCS:%.c=$(OBJ_DIR)/%.o)

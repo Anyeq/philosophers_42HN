@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2025/12/13 19:19:11 by asando           ###   ########.fr       */
+/*   Updated: 2025/12/17 15:22:32 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static int	ft_init_mutex_monitor(t_data *data)
 }
 
 // TODO: erasing condition
-//int	ft_start_monitoring_thread(t_data *data)
+// int	ft_start_monitoring_thread(t_data *data)
 //{
 //	if (data->n_philo > 1)
 //	{
@@ -135,18 +135,18 @@ static int	ft_init_mutex_monitor(t_data *data)
 
 int	ft_start_monitoring_thread(t_data *data)
 {
-   if (pthread_create(&(data->monitor_thread), NULL, ft_monitor_action,
-   		(void *)data))
-   {
-   	ft_system_failed(THREAD_FAIL, "data->monitor_thread");
-   	ft_destroy_mutex(data);
-   	return (-1);
-   }
-   if (ft_init_mutex_monitor(data))
-   {
-   	pthread_join(data->monitor_thread, NULL);
-   	ft_destroy_mutex(data);
-   	return (-1);
-   }
+	if (pthread_create(&(data->monitor_thread), NULL, ft_monitor_action,
+			(void *)data))
+	{
+		ft_system_failed(THREAD_FAIL, "data->monitor_thread");
+		ft_destroy_mutex(data);
+		return (-1);
+	}
+	if (ft_init_mutex_monitor(data))
+	{
+		pthread_join(data->monitor_thread, NULL);
+		ft_destroy_mutex(data);
+		return (-1);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:44:13 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 15:08:44 by asando           ###   ########.fr       */
+/*   Updated: 2025/12/17 15:17:07 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,5 @@ int		ft_atoi(char *str);
 void	ft_usleep(long target_time_ms, t_data *data);
 void	ft_log_action(t_philo *philo, char *action);
 long	ft_get_time_ms(void);
+void	ft_one_philo_action(t_philo *philo);
 #endif
