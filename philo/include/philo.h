@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:44:13 by asando            #+#    #+#             */
-/*   Updated: 2025/12/21 15:15:50 by asando           ###   ########.fr       */
+/*   Updated: 2025/12/21 20:33:32 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_data
 	pthread_mutex_t	mutex_monitor_n_eat;
 	pthread_mutex_t	*fork;
 }	t_data;
-
 
 // Flag for ft_usage function
 typedef enum e_input_flag
