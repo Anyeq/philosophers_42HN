@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:44:13 by asando            #+#    #+#             */
-/*   Updated: 2025/12/17 15:17:07 by asando           ###   ########.fr       */
+/*   Updated: 2025/12/21 15:15:50 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	struct s_data	*data;
+	bool			has_fork;
 }	t_philo;
 
 typedef struct s_data

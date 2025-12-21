@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:42:31 by asando            #+#    #+#             */
-/*   Updated: 2025/12/15 15:20:49 by asando           ###   ########.fr       */
+/*   Updated: 2025/12/20 20:57:33 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_start_simulation(t_data *data, t_philo *philo)
 	int	i;
 
 	i = 0;
-	data->time_start_ms = ft_get_time_ms() + (10 * data->n_philo);
+	data->time_start_ms = ft_get_time_ms() + (50 * data->n_philo);
 	while (i < data->n_philo)
 	{
 		philo[i].time_last_eat_ms = data->time_start_ms;

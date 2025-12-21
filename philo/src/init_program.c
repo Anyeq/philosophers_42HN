@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 13:50:19 by asando            #+#    #+#             */
-/*   Updated: 2025/12/13 09:12:25 by asando           ###   ########.fr       */
+/*   Updated: 2025/12/21 15:16:56 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static int	ft_init_philo(t_data *data, t_philo *philo)
 		if (data->n_philo != 1)
 			philo[i].left_fork = &data->fork[(i + 1) % data->n_philo];
 		philo[i].data = data;
+		philo[i].has_fork = false;
 		i++;
 	}
 	return (0);
