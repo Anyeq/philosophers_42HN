@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:42:31 by asando            #+#    #+#             */
-/*   Updated: 2025/12/20 20:57:33 by asando           ###   ########.fr       */
+/*   Updated: 2025/12/22 21:55:33 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,37 +33,8 @@ void	ft_join_thread(t_data *data)
 	return ;
 }
 
-static int	ft_start_simulation(t_data *data, t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	data->time_start_ms = ft_get_time_ms() + (50 * data->n_philo);
-	while (i < data->n_philo)
-	{
-		philo[i].time_last_eat_ms = data->time_start_ms;
-		if (pthread_create(&(philo[i].thread), NULL, ft_philo_action,
-				(void *)(&philo[i])))
-		{
-			ft_system_failed(THREAD_FAIL, "philo->thread");
-			while (--i >= 0)
-				pthread_join(philo[i].thread, NULL);
-			ft_destroy_mutex(data);
-			return (-1);
-		}
-		i++;
-	}
-	if (ft_start_monitoring_thread(data))
-	{
-		ft_join_thread(data);
-		return (-1);
-	}
-	return (0);
-}
-
 static void	ft_stop_simulation(t_data *data)
 {
-	ft_join_thread(data);
 	pthread_join(data->monitor_thread, NULL);
 	ft_destroy_mutex(data);
 	pthread_mutex_destroy(&(data->mutex_monitor_simulation_status));
@@ -72,13 +43,36 @@ static void	ft_stop_simulation(t_data *data)
 	return ;
 }
 
-// NOTE: Usage ./philo 4 410 200 200 || ./philo 4 410 200 200 5
-/* BUG: Failed case 5 800 200 200 7 when it times to finish it doesnt
- * show enough eating log
- * TODO: Check on ft_all_eat_enough
- * TODO: Check for logging on ft_action
-*/
+static int	ft_start_simulation(t_data *data, t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	data->time_start_ms = ft_get_time_ms() + (20 * data->n_philo);
+	while (i < data->n_philo)
+		philo[i++].time_last_eat_ms = data->time_start_ms;
+	i = 0;
+	if (ft_start_monitoring_thread(data))
+		return (-1);
+	while (i < data->n_philo)
+	{
+		if (pthread_create(&(philo[i].thread), NULL, ft_philo_action,
+				(void *)(&philo[i])))
+		{
+			ft_system_failed(THREAD_FAIL, "philo->thread");
+			while (--i >= 0)
+				pthread_join(philo[i].thread, NULL);
+			ft_stop_simulation(data);
+			return (-1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 // TODO: Dont forget to delete -g -O0 flag in Makefile
+// TODO: Make Debug option on Makefile
+// TODO: Clean unessacry comment and flag in Makefile
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -97,6 +91,7 @@ int	main(int argc, char **argv)
 		ft_free_alloc(&philo, &data);
 		return (-1);
 	}
+	ft_join_thread(&data);
 	ft_stop_simulation(&data);
 	ft_free_alloc(&philo, &data);
 	return (0);

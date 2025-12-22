@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2025/12/21 18:12:48 by asando           ###   ########.fr       */
+/*   Updated: 2025/12/22 21:53:10 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,16 +113,18 @@ static int	ft_init_mutex_monitor(t_data *data)
 
 int	ft_start_monitoring_thread(t_data *data)
 {
+	if (ft_init_mutex_monitor(data))
+	{
+		ft_destroy_mutex(data);
+		return (-1);
+	}
 	if (pthread_create(&(data->monitor_thread), NULL, ft_monitor_action,
 			(void *)data))
 	{
 		ft_system_failed(THREAD_FAIL, "data->monitor_thread");
-		ft_destroy_mutex(data);
-		return (-1);
-	}
-	if (ft_init_mutex_monitor(data))
-	{
-		pthread_join(data->monitor_thread, NULL);
+		pthread_mutex_destroy(&data->mutex_monitor_simulation_status);
+		pthread_mutex_destroy(&data->mutex_monitor_last_eat_time);
+		pthread_mutex_destroy(&data->mutex_monitor_n_eat);
 		ft_destroy_mutex(data);
 		return (-1);
 	}

@@ -6,13 +6,13 @@
 #    By: asando <asando@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/12 19:56:18 by asando            #+#    #+#              #
-#    Updated: 2025/12/17 15:17:37 by asando           ###   ########.fr        #
+#    Updated: 2025/12/22 21:15:49 by asando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC ?= cc
 DEBUG ?= 0
-CFLAGS := -g -O0 -Wall -Wextra -Wall -pthread
+CFLAGS := -fsanitize=thread -g -O0 -Wall -Wextra -Wall -pthread
 HEADER := include
 
 SRC_DIR := src
@@ -28,7 +28,7 @@ all: $(NAME)
 	@echo "Execution file is created (philo)"
 
 $(NAME): $(OBJS)
-	@$(CC) -o $@ $(OBJS)
+	@$(CC) -fsanitize=thread -o $@ $(OBJS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -I$(HEADER) -c $< -o $@
