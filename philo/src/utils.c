@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2025/12/22 20:59:39 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/04 13:05:03 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ int	ft_atoi(char *str)
 
 	res = 0;
 	sign = 1;
-	if (*str == '-')
+	if (*str == '-' || *str == '+')
 	{
-		sign = -1;
+		if (*str == '-')
+			sign = -1;
 		str++;
 	}
 	while (*str && ft_isdigit((unsigned char)*str))

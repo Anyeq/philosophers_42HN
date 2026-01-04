@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:43:03 by asando            #+#    #+#             */
-/*   Updated: 2025/11/23 13:26:37 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/04 13:07:08 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int	ft_is_valid(char *str)
 {
+	if (*str == '+')
+		str++;
 	while (*str)
 	{
 		if (ft_isdigit(*str) == 0)
