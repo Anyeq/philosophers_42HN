@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2026/01/04 14:46:04 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/04 15:29:24 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static bool	ft_stop_simulation_condition(t_data *data, t_philo *philo)
 		printf("%ld %d %s\n", current_time - philo->data->time_start_ms,
 			philo->id, "died");
 		pthread_mutex_unlock(&(data->mutex_print_log));
-		if (data->n_philo == 1)
-			pthread_mutex_unlock(philo->right_fork);
 		return (true);
 	}
 	return (false);
