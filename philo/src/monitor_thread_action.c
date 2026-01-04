@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2025/12/22 21:53:10 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/04 14:46:04 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,36 +88,8 @@ static void	*ft_monitor_action(void *param)
 	return (NULL);
 }
 
-static int	ft_init_mutex_monitor(t_data *data)
-{
-	if (pthread_mutex_init(&(data->mutex_monitor_simulation_status), NULL))
-	{
-		ft_system_failed(MUTEX_FAIL, "data->mutex_simulation_status");
-		return (-1);
-	}
-	if (pthread_mutex_init(&(data->mutex_monitor_last_eat_time), NULL))
-	{
-		ft_system_failed(MUTEX_FAIL, "data->mutex_last_eat_time");
-		pthread_mutex_destroy(&(data->mutex_monitor_simulation_status));
-		return (-1);
-	}
-	if (pthread_mutex_init(&(data->mutex_monitor_n_eat), NULL))
-	{
-		ft_system_failed(MUTEX_FAIL, "data->mutex_monitor_n_eat");
-		pthread_mutex_destroy(&(data->mutex_monitor_simulation_status));
-		pthread_mutex_destroy(&(data->mutex_monitor_last_eat_time));
-		return (-1);
-	}
-	return (0);
-}
-
 int	ft_start_monitoring_thread(t_data *data)
 {
-	if (ft_init_mutex_monitor(data))
-	{
-		ft_destroy_mutex(data);
-		return (-1);
-	}
 	if (pthread_create(&(data->monitor_thread), NULL, ft_monitor_action,
 			(void *)data))
 	{
