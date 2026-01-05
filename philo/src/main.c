@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:42:31 by asando            #+#    #+#             */
-/*   Updated: 2026/01/05 14:30:17 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/05 14:35:14 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,6 @@ static int	ft_start_simulation(t_data *data, t_philo *philo)
 	return (0);
 }
 
-// TODO: Dont forget to delete -g -O0 flag in Makefile
-// TODO: Make Debug option on Makefile
-// TODO: Clean unessacry comment and flag in Makefile
 int	main(int argc, char **argv)
 {
 	t_data	data;
