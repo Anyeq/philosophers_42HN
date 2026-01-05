@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2026/01/04 15:29:24 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/05 14:32:29 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static bool	ft_all_eat_enough(t_data *data)
 		i++;
 	}
 	pthread_mutex_unlock(&data->mutex_monitor_n_eat);
-	if (n_philo_eat_enough == data->n_philo)
+	if (n_philo_eat_enough >= data->n_philo)
 	{
 		pthread_mutex_lock(&data->mutex_monitor_simulation_status);
 		data->end_simulation = true;
@@ -81,7 +81,7 @@ static void	*ft_monitor_action(void *param)
 				break ;
 			i++;
 		}
-		ft_usleep(10, data);
+		ft_usleep(1, data);
 	}
 	return (NULL);
 }
