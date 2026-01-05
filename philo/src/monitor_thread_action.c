@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2026/01/05 14:56:14 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/05 15:44:57 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static bool	ft_all_eat_enough(t_data *data)
 	pthread_mutex_lock(&data->mutex_monitor_n_eat);
 	while (i < data->n_philo)
 	{
-		if (data->philo[i].n_eat == data->n_eat_max)
+		if (data->philo[i].n_eat >= data->n_eat_max)
 			n_philo_eat_enough++;
 		i++;
 	}
