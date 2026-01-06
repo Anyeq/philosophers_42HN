@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 13:50:19 by asando            #+#    #+#             */
-/*   Updated: 2026/01/04 14:46:02 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/06 12:03:07 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static int	ft_init_mutex_monitor(t_data *data)
 	return (0);
 }
 
-// NOTE: check about the release fork
 static int	ft_init_philo(t_data *data, t_philo *philo)
 {
 	int	i;

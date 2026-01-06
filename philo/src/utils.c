@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2026/01/05 15:45:17 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/06 14:40:39 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,41 +50,33 @@ long	ft_get_time_ms(void)
 
 void	ft_log_action(t_philo *philo, char *action)
 {
-	bool	simulation_status;
 	long	current_time;
 
 	current_time = ft_get_time_ms();
-	pthread_mutex_lock(&(philo->data->mutex_monitor_simulation_status));
-	simulation_status = philo->data->end_simulation;
-	pthread_mutex_unlock(&(philo->data->mutex_monitor_simulation_status));
-	if (simulation_status == false)
+	pthread_mutex_lock(&(philo->data->mutex_print_log));
+	if (philo->data->end_simulation == false)
 	{
-		pthread_mutex_lock(&(philo->data->mutex_print_log));
-		if (philo->data->end_simulation == false)
-		{
-			printf("%ld %d %s\n", current_time - philo->data->time_start_ms,
-				philo->id, action);
-		}
-		pthread_mutex_unlock(&(philo->data->mutex_print_log));
+		printf("%ld %d %s\n", current_time - philo->data->time_start_ms,
+			philo->id, action);
 	}
+	pthread_mutex_unlock(&(philo->data->mutex_print_log));
 	return ;
 }
 
 void	ft_usleep(long target_time_ms, t_data *data)
 {
 	long	start;
-	bool	simulation_status;
 
 	start = ft_get_time_ms();
-	while (1)
+	while (ft_get_time_ms() - start < target_time_ms)
 	{
 		pthread_mutex_lock(&(data->mutex_monitor_simulation_status));
-		simulation_status = data->end_simulation;
+		if (data->end_simulation)
+		{
+			pthread_mutex_unlock(&(data->mutex_monitor_simulation_status));
+			return ;
+		}
 		pthread_mutex_unlock(&(data->mutex_monitor_simulation_status));
-		if (simulation_status)
-			break ;
-		if (ft_get_time_ms() - start >= target_time_ms)
-			break ;
 		usleep(100);
 	}
 	return ;

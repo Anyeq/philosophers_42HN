@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:43:03 by asando            #+#    #+#             */
-/*   Updated: 2026/01/04 13:07:08 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/06 15:35:06 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	ft_parse_input(int argc, char **argv, t_data *data)
 	if (ft_check_input_error(argc, argv) == -1)
 		return (-1);
 	data->n_philo = ft_atoi(argv[1]);
+	if (data->n_philo > 200)
+		ft_usage(INVALID_NPHILO_MAX);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);

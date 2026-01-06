@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:44:13 by asando            #+#    #+#             */
-/*   Updated: 2025/12/21 20:33:32 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/06 15:38:52 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ typedef enum e_input_flag
 {
 	INVALID_NPARAMS = 1 << 0,
 	INVALID_NPHILO = 1 << 1,
-	INVALID_INPUT = 1 << 2
+	INVALID_INPUT = 1 << 2,
+	INVALID_NPHILO_MAX = 1 << 3,
 }	t_input_flag;
 
 // Flag for ft_system_failed

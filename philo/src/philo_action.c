@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2026/01/05 15:30:38 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/06 14:41:25 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,21 @@ static void	ft_take_fork(t_philo *philo)
 static void	ft_think(t_philo *philo)
 {
 	long	time_to_think;
+	long	time_last_eat;
 
 	ft_log_action(philo, "is thinking");
 	pthread_mutex_lock(&philo->data->mutex_monitor_last_eat_time);
-	time_to_think = philo->data->time_to_eat - philo->data->time_to_sleep + 1;
+	time_last_eat = philo->time_last_eat_ms;
 	pthread_mutex_unlock(&philo->data->mutex_monitor_last_eat_time);
+	time_to_think = (philo->data->time_to_die
+			- (ft_get_time_ms() - time_last_eat)
+			- philo->data->time_to_eat) / 2;
 	if (time_to_think < 0)
 		time_to_think = 0;
 	else if (time_to_think > 0 && philo->n_eat == 0)
 		time_to_think = 0;
-	else if (time_to_think > 600)
-		time_to_think = 100;
+	else if (time_to_think > 200)
+		time_to_think = 200;
 	ft_usleep(time_to_think, philo->data);
 	return ;
 }
@@ -78,10 +82,10 @@ static void	ft_eat(t_philo *philo)
 			pthread_mutex_unlock(philo->left_fork);
 		}
 		philo->has_fork = false;
+		pthread_mutex_lock(&(philo->data->mutex_monitor_n_eat));
+		philo->n_eat++;
+		pthread_mutex_unlock(&(philo->data->mutex_monitor_n_eat));
 	}
-	pthread_mutex_lock(&(philo->data->mutex_monitor_n_eat));
-	philo->n_eat++;
-	pthread_mutex_unlock(&(philo->data->mutex_monitor_n_eat));
 	return ;
 }
 
@@ -102,7 +106,7 @@ void	*ft_philo_action(void *arg)
 
 	philo = (t_philo *)arg;
 	while (ft_get_time_ms() < philo->data->time_start_ms)
-		continue ;
+		ft_usleep(1, philo->data);
 	if (philo->id % 2 == 0)
 		ft_usleep(1, philo->data);
 	while (1)

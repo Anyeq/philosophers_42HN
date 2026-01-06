@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2026/01/05 15:44:57 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/06 14:26:05 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,33 @@ static bool	ft_all_eat_enough(t_data *data)
 
 	i = 0;
 	n_philo_eat_enough = 0;
-	pthread_mutex_lock(&data->mutex_monitor_n_eat);
-	while (i < data->n_philo)
+	while (data->n_eat_max >= 0 && i < data->n_philo)
 	{
+		pthread_mutex_lock(&data->mutex_monitor_n_eat);
 		if (data->philo[i].n_eat >= data->n_eat_max)
 			n_philo_eat_enough++;
+		pthread_mutex_unlock(&data->mutex_monitor_n_eat);
 		i++;
 	}
-	pthread_mutex_unlock(&data->mutex_monitor_n_eat);
-	if (n_philo_eat_enough >= data->n_philo)
+	if (n_philo_eat_enough == data->n_philo)
 	{
 		pthread_mutex_lock(&data->mutex_monitor_simulation_status);
 		data->end_simulation = true;
 		pthread_mutex_unlock(&data->mutex_monitor_simulation_status);
 		return (true);
 	}
+	return (false);
+}
+
+bool	ft_simulation_status(t_data *data)
+{
+	pthread_mutex_lock(&data->mutex_monitor_simulation_status);
+	if (data->end_simulation == true)
+	{
+		pthread_mutex_unlock(&data->mutex_monitor_simulation_status);
+		return (true);
+	}
+	pthread_mutex_unlock(&data->mutex_monitor_simulation_status);
 	return (false);
 }
 
@@ -69,8 +81,8 @@ static void	*ft_monitor_action(void *param)
 	i = 0;
 	data = (t_data *)param;
 	while (ft_get_time_ms() < data->time_start_ms)
-		continue ;
-	while (data->end_simulation == false)
+		ft_usleep(1, data);
+	while (!ft_simulation_status(data))
 	{
 		i = 0;
 		if (ft_all_eat_enough(data) == true)
