@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:44:13 by asando            #+#    #+#             */
-/*   Updated: 2026/01/06 15:38:52 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/08 16:35:06 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	struct s_data	*data;
+	pthread_mutex_t	mutex_last_eat_time;
+	pthread_mutex_t	mutex_n_eat;
 	bool			has_fork;
 }	t_philo;
 
@@ -45,8 +47,6 @@ typedef struct s_data
 	pthread_t		monitor_thread;
 	pthread_mutex_t	mutex_print_log;
 	pthread_mutex_t	mutex_monitor_simulation_status;
-	pthread_mutex_t	mutex_monitor_last_eat_time;
-	pthread_mutex_t	mutex_monitor_n_eat;
 	pthread_mutex_t	*fork;
 }	t_data;
 
@@ -81,6 +81,7 @@ void	*ft_philo_action(void *arg);
 
 // Thread control Function
 void	ft_destroy_mutex(t_data *data);
+void	ft_destroy_mutex_eat(t_data *data, int code, int i);
 int		ft_start_monitoring_thread(t_data *data);
 void	ft_join_thread(t_data *data);
 

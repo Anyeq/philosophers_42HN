@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:42:31 by asando            #+#    #+#             */
-/*   Updated: 2026/01/06 19:31:01 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/08 16:52:53 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ static void	ft_stop_simulation(t_data *data)
 {
 	pthread_join(data->monitor_thread, NULL);
 	ft_destroy_mutex(data);
+	ft_destroy_mutex_eat(data, 2, data->n_philo);
 	pthread_mutex_destroy(&(data->mutex_monitor_simulation_status));
-	pthread_mutex_destroy(&(data->mutex_monitor_last_eat_time));
-	pthread_mutex_destroy(&(data->mutex_monitor_n_eat));
 	return ;
 }
 
@@ -70,6 +69,8 @@ static int	ft_start_simulation(t_data *data, t_philo *philo)
 	return (0);
 }
 
+//NOTE: Fix again for one case philo
+//BUG: NORMINATE
 int	main(int argc, char **argv)
 {
 	t_data	data;
