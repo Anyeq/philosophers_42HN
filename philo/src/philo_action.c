@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2026/01/07 18:21:58 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/08 14:59:39 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,34 @@
 
 static void	ft_take_fork(t_philo *philo)
 {
-	bool	simulation_status;
+	//bool	simulation_status;
 
-	pthread_mutex_lock(&philo->data->mutex_monitor_simulation_status);
-	simulation_status = philo->data->end_simulation;
-	pthread_mutex_unlock(&philo->data->mutex_monitor_simulation_status);
-	if (simulation_status == false)
-	{
-		if (philo->id % 2 == 0)
-		{
-			pthread_mutex_lock(philo->right_fork);
-			ft_log_action(philo, "has taken a fork");
-			pthread_mutex_lock(philo->left_fork);
-			ft_log_action(philo, "has taken a fork");
-		}
-		else
-		{
-			pthread_mutex_lock(philo->left_fork);
-			ft_log_action(philo, "has taken a fork");
-			pthread_mutex_lock(philo->right_fork);
-			ft_log_action(philo, "has taken a fork");
-		}
-		philo->has_fork = true;
-	}
+	//pthread_mutex_lock(&philo->data->mutex_monitor_simulation_status);
+	//simulation_status = philo->data->end_simulation;
+	//pthread_mutex_unlock(&philo->data->mutex_monitor_simulation_status);
+	//if (simulation_status == false)
+	//{
+	//	if (philo->id % 2 == 0)
+	//	{
+	//		pthread_mutex_lock(philo->right_fork);
+	//		ft_log_action(philo, "has taken a fork");
+	//		pthread_mutex_lock(philo->left_fork);
+	//		ft_log_action(philo, "has taken a fork");
+	//	}
+	//	else
+	//	{
+	//		pthread_mutex_lock(philo->left_fork);
+	//		ft_log_action(philo, "has taken a fork");
+	//		pthread_mutex_lock(philo->right_fork);
+	//		ft_log_action(philo, "has taken a fork");
+	//	}
+	//	philo->has_fork = true;
+	pthread_mutex_lock(philo->right_fork);
+	ft_log_action(philo, "has taken a fork");
+	pthread_mutex_lock(philo->left_fork);
+	ft_log_action(philo, "has taken a fork");
+
+	//}
 	return ;
 }
 
@@ -78,16 +83,18 @@ static void	ft_eat(t_philo *philo)
 	ft_usleep(philo->data->time_to_eat, philo->data);
 	if (philo->has_fork)
 	{
-		if (philo->id % 2 == 0)
-		{
-			pthread_mutex_unlock(philo->left_fork);
-			pthread_mutex_unlock(philo->right_fork);
-		}
-		else
-		{
-			pthread_mutex_unlock(philo->right_fork);
-			pthread_mutex_unlock(philo->left_fork);
-		}
+		//if (philo->id % 2 == 0)
+		//{
+		//	pthread_mutex_unlock(philo->left_fork);
+		//	pthread_mutex_unlock(philo->right_fork);
+		//}
+		//else
+		//{
+		//	pthread_mutex_unlock(philo->right_fork);
+		//	pthread_mutex_unlock(philo->left_fork);
+		//}
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
 		philo->has_fork = false;
 		pthread_mutex_lock(&(philo->data->mutex_monitor_n_eat));
 		philo->n_eat++;

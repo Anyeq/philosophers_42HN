@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 13:50:19 by asando            #+#    #+#             */
-/*   Updated: 2026/01/06 12:03:07 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/08 14:53:40 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,18 @@ static int	ft_init_philo(t_data *data, t_philo *philo)
 	{
 		philo[i].id = i + 1;
 		philo[i].n_eat = 0;
-		philo[i].right_fork = &data->fork[i];
-		if (data->n_philo != 1)
+		if ((i + 1) % 2 == 0)
+		{
+			philo[i].right_fork = &data->fork[i];
 			philo[i].left_fork = &data->fork[(i + 1) % data->n_philo];
+		}
+		else
+		{
+			philo[i].left_fork = &data->fork[i];
+			philo[i].right_fork = &data->fork[(i + 1) % data->n_philo];
+		}
+		//if (data->n_philo != 1)
+		//	philo[i].left_fork = &data->fork[(i + 1) % data->n_philo];
 		philo[i].data = data;
 		philo[i].has_fork = false;
 		i++;
