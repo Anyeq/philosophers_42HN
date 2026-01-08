@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2026/01/06 14:40:39 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/07 17:42:47 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,15 @@ long	ft_get_time_ms(void)
 
 void	ft_log_action(t_philo *philo, char *action)
 {
-	long	current_time;
+	bool	simulation_status;
 
-	current_time = ft_get_time_ms();
 	pthread_mutex_lock(&(philo->data->mutex_print_log));
-	if (philo->data->end_simulation == false)
+	pthread_mutex_lock(&(philo->data->mutex_monitor_simulation_status));
+	simulation_status = philo->data->end_simulation;
+	pthread_mutex_unlock(&(philo->data->mutex_monitor_simulation_status));
+	if (simulation_status == false)
 	{
-		printf("%ld %d %s\n", current_time - philo->data->time_start_ms,
+		printf("%ld %d %s\n", ft_get_time_ms() - philo->data->time_start_ms,
 			philo->id, action);
 	}
 	pthread_mutex_unlock(&(philo->data->mutex_print_log));

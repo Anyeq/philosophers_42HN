@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2026/01/06 14:26:05 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/07 17:48:47 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static bool	ft_stop_simulation_condition(t_data *data, t_philo *philo)
 	long	current_time;
 	long	time_last_eat_ms;
 
-	current_time = ft_get_time_ms();
 	time_last_eat_ms = 0;
 	pthread_mutex_lock(&data->mutex_monitor_last_eat_time);
 	time_last_eat_ms = philo->time_last_eat_ms;
 	pthread_mutex_unlock(&data->mutex_monitor_last_eat_time);
-	if (current_time - time_last_eat_ms >= data->time_to_die)
+	current_time = ft_get_time_ms();
+	if (current_time - time_last_eat_ms > data->time_to_die)
 	{
 		pthread_mutex_lock(&data->mutex_monitor_simulation_status);
 		data->end_simulation = true;
@@ -61,7 +61,7 @@ static bool	ft_all_eat_enough(t_data *data)
 	return (false);
 }
 
-bool	ft_simulation_status(t_data *data)
+static bool	ft_simulation_status(t_data *data)
 {
 	pthread_mutex_lock(&data->mutex_monitor_simulation_status);
 	if (data->end_simulation == true)

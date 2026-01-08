@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2026/01/06 14:41:25 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/07 18:21:58 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,16 @@ static void	ft_think(t_philo *philo)
 	if (time_to_think < 0)
 		time_to_think = 0;
 	else if (time_to_think > 0 && philo->n_eat == 0)
-		time_to_think = 0;
-	else if (time_to_think > 200)
+			time_to_think = 0;
+	else if (time_to_think > 200 && philo->data->n_philo % 2 == 0
+			&& philo->data->n_philo < 100)
 		time_to_think = 200;
+	else if (philo->data->n_philo > 100)
+	{
+		//time_to_think = 0;
+		time_to_think = (philo->data->time_to_die - philo->data->time_to_eat
+					- philo->data->time_to_eat + 1) / 4;
+	}
 	ft_usleep(time_to_think, philo->data);
 	return ;
 }
@@ -108,7 +115,7 @@ void	*ft_philo_action(void *arg)
 	while (ft_get_time_ms() < philo->data->time_start_ms)
 		ft_usleep(1, philo->data);
 	if (philo->id % 2 == 0)
-		ft_usleep(1, philo->data);
+		ft_usleep(2, philo->data);
 	while (1)
 	{
 		if (philo->data->n_philo == 1)
