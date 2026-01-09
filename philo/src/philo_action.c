@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2026/01/08 16:50:17 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/09 12:39:02 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,21 @@ static void	ft_think(t_philo *philo)
 		time_to_think = 0;
 	else if (time_to_think > 0 && philo->n_eat == 0)
 		time_to_think = 0;
-	else if (time_to_think > 200)
+	else if (time_to_think > 600)
 		time_to_think = 200;
 	ft_usleep(time_to_think, philo->data);
 	return ;
 }
 
+//NOTE: n_eat calculation need to be fix whem it have fork but not actually eat
 static void	ft_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->mutex_last_eat_time));
 	philo->time_last_eat_ms = ft_get_time_ms();
 	pthread_mutex_unlock(&(philo->mutex_last_eat_time));
+	pthread_mutex_lock(&(philo->mutex_n_eat));
+	philo->n_eat++;
+	pthread_mutex_unlock(&(philo->mutex_n_eat));
 	ft_log_action(philo, "is eating");
 	ft_usleep(philo->data->time_to_eat, philo->data);
 	if (philo->has_fork)
@@ -64,9 +68,6 @@ static void	ft_eat(t_philo *philo)
 		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(philo->left_fork);
 		philo->has_fork = false;
-		pthread_mutex_lock(&(philo->mutex_n_eat));
-		philo->n_eat++;
-		pthread_mutex_unlock(&(philo->mutex_n_eat));
 	}
 	return ;
 }
@@ -81,6 +82,7 @@ static void	ft_action(t_philo *philo)
 	return ;
 }
 
+//NOTE: Check the condition for one philo function
 void	*ft_philo_action(void *arg)
 {
 	t_philo	*philo;

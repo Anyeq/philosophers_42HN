@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:27:39 by asando            #+#    #+#             */
-/*   Updated: 2026/01/07 17:42:47 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/09 12:00:03 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_usleep(long target_time_ms, t_data *data)
 			return ;
 		}
 		pthread_mutex_unlock(&(data->mutex_monitor_simulation_status));
-		usleep(100);
+		usleep(20);
 	}
 	return ;
 }

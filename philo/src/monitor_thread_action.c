@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2026/01/08 16:48:53 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/09 12:12:39 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static bool	ft_all_eat_enough(t_data *data)
 	int	i;
 
 	i = 0;
-	while (data->n_eat_max >= 0 && i < data->n_philo)
+	while (i < data->n_philo)
 	{
 		pthread_mutex_lock(&data->philo[i].mutex_n_eat);
 		if (data->philo[i].n_eat < data->n_eat_max)
@@ -77,6 +77,8 @@ static void	*ft_monitor_action(void *param)
 	data = (t_data *)param;
 	while (ft_get_time_ms() < data->time_start_ms)
 		ft_usleep(1, data);
+	if (data->n_philo == 1)
+		ft_usleep(5, data);
 	while (!ft_simulation_status(data))
 	{
 		i = 0;
@@ -88,7 +90,7 @@ static void	*ft_monitor_action(void *param)
 		}
 		if (ft_all_eat_enough(data) == true)
 			return (NULL);
-		ft_usleep(1, data);
+		ft_usleep(2, data);
 	}
 	return (NULL);
 }
