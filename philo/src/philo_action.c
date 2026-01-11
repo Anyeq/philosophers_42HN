@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2026/01/09 12:39:02 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/11 18:57:48 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,10 @@
 
 static void	ft_take_fork(t_philo *philo)
 {
-	bool	simulation_status;
-
-	pthread_mutex_lock(&philo->data->mutex_monitor_simulation_status);
-	simulation_status = philo->data->end_simulation;
-	pthread_mutex_unlock(&philo->data->mutex_monitor_simulation_status);
-	if (simulation_status == false)
-	{
-		pthread_mutex_lock(philo->right_fork);
-		ft_log_action(philo, "has taken a fork");
-		pthread_mutex_lock(philo->left_fork);
-		ft_log_action(philo, "has taken a fork");
-		philo->has_fork = true;
-	}
+	pthread_mutex_lock(philo->right_fork);
+	ft_log_action(philo, "has taken a fork");
+	pthread_mutex_lock(philo->left_fork);
+	ft_log_action(philo, "has taken a fork");
 	return ;
 }
 
@@ -44,15 +35,12 @@ static void	ft_think(t_philo *philo)
 			- philo->data->time_to_eat) / 2;
 	if (time_to_think < 0)
 		time_to_think = 0;
-	else if (time_to_think > 0 && philo->n_eat == 0)
-		time_to_think = 0;
 	else if (time_to_think > 600)
 		time_to_think = 200;
 	ft_usleep(time_to_think, philo->data);
 	return ;
 }
 
-//NOTE: n_eat calculation need to be fix whem it have fork but not actually eat
 static void	ft_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->mutex_last_eat_time));
@@ -63,26 +51,21 @@ static void	ft_eat(t_philo *philo)
 	pthread_mutex_unlock(&(philo->mutex_n_eat));
 	ft_log_action(philo, "is eating");
 	ft_usleep(philo->data->time_to_eat, philo->data);
-	if (philo->has_fork)
-	{
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
-		philo->has_fork = false;
-	}
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
 	return ;
 }
 
 static void	ft_action(t_philo *philo)
 {
-	ft_think(philo);
 	ft_take_fork(philo);
 	ft_eat(philo);
 	ft_log_action(philo, "is sleeping");
 	ft_usleep(philo->data->time_to_sleep, philo->data);
+	ft_think(philo);
 	return ;
 }
 
-//NOTE: Check the condition for one philo function
 void	*ft_philo_action(void *arg)
 {
 	t_philo	*philo;
@@ -92,7 +75,7 @@ void	*ft_philo_action(void *arg)
 	while (ft_get_time_ms() < philo->data->time_start_ms)
 		ft_usleep(1, philo->data);
 	if (philo->id % 2 == 0)
-		ft_usleep(2, philo->data);
+		ft_usleep(1, philo->data);
 	while (1)
 	{
 		if (philo->data->n_philo == 1)

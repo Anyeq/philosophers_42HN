@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:19:05 by asando            #+#    #+#             */
-/*   Updated: 2026/01/09 12:12:39 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/11 19:27:31 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static bool	ft_all_eat_enough(t_data *data)
 	int	i;
 
 	i = 0;
+	if (data->n_eat_max == -1)
+		return (false);
 	while (i < data->n_philo)
 	{
 		pthread_mutex_lock(&data->philo[i].mutex_n_eat);
@@ -102,7 +104,7 @@ int	ft_start_monitoring_thread(t_data *data)
 	{
 		ft_system_failed(THREAD_FAIL, "data->monitor_thread");
 		pthread_mutex_destroy(&data->mutex_monitor_simulation_status);
-		ft_destroy_mutex(data);
+		ft_destroy_mutex(data, data->n_philo, true);
 		ft_destroy_mutex_eat(data, 2, data->n_philo);
 		return (-1);
 	}

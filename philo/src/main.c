@@ -6,20 +6,21 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:42:31 by asando            #+#    #+#             */
-/*   Updated: 2026/01/09 12:13:18 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/11 19:16:11 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_destroy_mutex(t_data *data)
+void	ft_destroy_mutex(t_data *data, int size, bool delete_print_log)
 {
 	int	i;
 
 	i = 0;
-	while (i < data->n_philo)
+	while (i < size)
 		pthread_mutex_destroy(&(data->fork[i++]));
-	pthread_mutex_destroy(&(data->mutex_print_log));
+	if (delete_print_log)
+		pthread_mutex_destroy(&(data->mutex_print_log));
 	return ;
 }
 
@@ -36,7 +37,7 @@ void	ft_join_thread(t_data *data)
 static void	ft_stop_simulation(t_data *data)
 {
 	pthread_join(data->monitor_thread, NULL);
-	ft_destroy_mutex(data);
+	ft_destroy_mutex(data, data->n_philo, true);
 	ft_destroy_mutex_eat(data, 2, data->n_philo);
 	pthread_mutex_destroy(&(data->mutex_monitor_simulation_status));
 	return ;
@@ -69,8 +70,6 @@ static int	ft_start_simulation(t_data *data, t_philo *philo)
 	return (0);
 }
 
-//NOTE: Fix again for one case philo
-//BUG: NORMINATE
 int	main(int argc, char **argv)
 {
 	t_data	data;
