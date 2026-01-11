@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:56:52 by asando            #+#    #+#             */
-/*   Updated: 2026/01/11 18:57:48 by asando           ###   ########.fr       */
+/*   Updated: 2026/01/11 19:36:20 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,16 @@ void	*ft_philo_action(void *arg)
 	philo = (t_philo *)arg;
 	while (ft_get_time_ms() < philo->data->time_start_ms)
 		ft_usleep(1, philo->data);
+	if (philo->data->n_philo == 1)
+	{
+		ft_one_philo_action(philo);
+		return (NULL);
+	}
 	if (philo->id % 2 == 0)
 		ft_usleep(1, philo->data);
 	while (1)
 	{
-		if (philo->data->n_philo == 1)
-			ft_one_philo_action(philo);
-		else
-			ft_action(philo);
+		ft_action(philo);
 		pthread_mutex_lock(&(philo->data->mutex_monitor_simulation_status));
 		simulation_status = philo->data->end_simulation;
 		pthread_mutex_unlock(&(philo->data->mutex_monitor_simulation_status));
